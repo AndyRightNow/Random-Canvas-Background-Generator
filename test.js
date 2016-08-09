@@ -3,30 +3,51 @@
  */
 
 function CHECK_UNDEFINED(obj) {
-    if (typeof obj === "undefined") return true;
-    else return false;
+    if (typeof obj === "undefined") {
+        console.log(obj, "UNDEFINED", Boolean(true));
+        return true;
+    }
+    else {
+        console.log(obj, "UNDEFINED", Boolean(false));
+        return false;
+    }
 }
 
 function TEST(testName, func) {
     console.log("--------------------------------------------------------");
     console.log(testName + ": ");
-    var result = func();
-    for (var i = 0; i < result.length; i++)
-        console.log(result[i]);
+    func();
     console.log("--------------------------------------------------------");
     console.log("\n");
+}
+
+function ASSERT_EQUAL(a, b){
+    var res = a === b;
+    console.log("---------------------------", a, b, "Equal: ", Boolean(res));
+    if (res) return true;
+    else return false;
+}
+
+function ASSERT_TRUE(cond){
+    if (cond) {
+        console.log("Conditions all PASS!");
+    }
+    else{
+        console.log("Conditions don't pass completely.");
+    }
 }
 
 TEST("Constructor Test", function() {
     var background1 = new RandomBackgroundGenerator("canvas", "Polygonal");
     var background2 = new RandomBackgroundGenerator("canvas");
     var background3 = new RandomBackgroundGenerator();
-
-    return [
-		background1,
-		background2,
-		background3
-	];
+    ASSERT_TRUE(
+        ASSERT_EQUAL(background1._canvas, document.getElementById("canvas")) &&
+        ASSERT_EQUAL(background1._mode, "Polygonal") &&
+        ASSERT_EQUAL(background2._canvas, document.getElementById("canvas")) &&
+        CHECK_UNDEFINED(background2._mode) &&
+        ASSERT_EQUAL(background3._canvas, null) &&
+        CHECK_UNDEFINED(background3._mode));
 });
 
 TEST("Point Class Test", function() {
@@ -95,6 +116,19 @@ TEST("isRgb Test", function() {
     rgb3, isRgb(rgb3),
     rgb4, isRgb(rgb4),
     rgb5, isRgb(rgb5),];
+});
+
+TEST("darkenColor Test", function() {
+    var rgb1 = "#0F0F0F";
+    var rgb2 = "#010101";
+    var rgb3 = "#0B0B0B";
+    var rgb4 = "#000";
+    return [
+    rgb1, darkenColor(rgb1, 0.3),
+    rgb2, darkenColor(rgb2, 0.2),
+    rgb3, darkenColor(rgb3),
+    rgb4, darkenColor(rgb4),
+    ];
 });
 
 // TEST("_fillPolygon Test", function(){

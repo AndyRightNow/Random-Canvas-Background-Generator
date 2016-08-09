@@ -100,21 +100,42 @@
         color = color.replace(/\s/g, "");
         return /a/gi.test(color) ? /rgba\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0]{0,1}[.]{0,1}[0-9]{1,2}\)/gi.test(color)
             : /rgb\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\)/gi.test(color);
-        
      }
 
     /*
      *	Convert hex color to rgb color
+     *  @return {string / null} Converted color string or null if the input is invalid
      */
     function hexToRGB(hex) {
-    	
+    	if (isHex(hex)) {
+            return "rgb(" + 
+            parseInt(hex.substr(1, 2), 16) + ", " + 
+            parseInt(hex.substr(3, 2), 16) + ", " + 
+            parseInt(hex.substr(5, 2), 16) + ")";
+        }
+        else return isRgb(hex) ? hex : null;
     }
 
     /*
      *	Darken a color by percentage
+     *  @param {string} color: The color string
+     *  @param {float} percentage: A float within [0, 1] by which the color is darkened
      */
-    function darkenColor(color, percentage) {
+    function darkenColor(color, percentage = 0) {
+        if (isHex(color)) {
+            color = hexToRGB(color);
+        }
+        else if (!isRgb(color)){
+            return color;
+        }
 
+        if (color !== null) {
+            return color.replace(/[0-2]{0,1}[0-5]{0,1}[0-5]{1}/gi, function(e){
+                return (parseInt(e) * (1 - percentage)).toString();
+            });
+        }
+
+        return color;
     }
 
     /*
@@ -200,5 +221,6 @@
     window.hexToRGB = hexToRGB;
     window.isHex = isHex;
     window.isRgb = isRgb;
+    window.darkenColor = darkenColor;
 })();
 
