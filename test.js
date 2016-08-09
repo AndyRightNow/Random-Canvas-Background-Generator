@@ -1,3 +1,7 @@
+/*
+ *  Temporary test framework
+ */
+
 function CHECK_UNDEFINED(obj) {
     if (typeof obj === "undefined") return true;
     else return false;
@@ -77,6 +81,20 @@ TEST("isHex Test", function() {
 	hex2, isHex(hex2),
 	hex3, isHex(hex3),
 	hex4, isHex(hex4)];
+});
+
+TEST("isRgb Test", function() {
+    var rgb1 = "#000000";
+    var rgb2 = "rgba(0,             0,               0)";
+    var rgb3 = "rgb(0, 0, 0, 0)";
+    var rgb4 = "rgb(0, 0, 0)";
+    var rgb5 = "rgba(0, 0, 0, 0.5)";
+    return [
+    rgb1, isRgb(rgb1),
+    rgb2, isRgb(rgb2),
+    rgb3, isRgb(rgb3),
+    rgb4, isRgb(rgb4),
+    rgb5, isRgb(rgb5),];
 });
 
 // TEST("_fillPolygon Test", function(){

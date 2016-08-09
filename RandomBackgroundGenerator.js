@@ -64,7 +64,7 @@
     }
 
     /*
-     * Get a random point from a rectangle
+     *  Get a random point from a rectangle
      *
      *	@param {Point} p1, p2, p3, p4: Points of a rectangle starting 
      *								   from the top left corner and going
@@ -75,41 +75,39 @@
     }
 
     /*
-     * Get a random point at a line
+     *  Get a random point at a line
      */
     function getRandomPointOnLine(p1, p2) {
 
     }
 
     /*
-     * Check if a string is in a hex color format
+     *  Check if a string is in a hex color format
+     *  @return {boolean} True if the string is in a hex format
+     *  @param {string} color: The string representing the color
      */
     function isHex(color) {
-    	if (color.length != 7 || color[0] != '#') return false;
-    	for (var i = 1; i < color.length; i++) {
-    		var code = color.charCodeAt(i);
-    		if (code < '0'.charCodeAt(0) ||
-    			(code > '9'.charCodeAt(0) && code < 'A'.charCodeAt(0)) ||
-    			code > 'F'.charCodeAt(0)){
-    			return false;
-    		}
-    	}
-    	return true;
+    	return /#[a-f0-9]{6}/gi.test(color);
     }
+
+    /*
+     *  Check if a string is in a rgb or rgba color format
+     *  @return {boolean} True if the string is in a rgb format
+     *  @param {string} color: The string representing the color
+     */
+     function isRgb(color) {
+        //  Eliminate white spaces
+        color = color.replace(/\s/g, "");
+        return /a/gi.test(color) ? /rgba\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0]{0,1}[.]{0,1}[0-9]{1,2}\)/gi.test(color)
+            : /rgb\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\)/gi.test(color);
+        
+     }
 
     /*
      *	Convert hex color to rgb color
      */
     function hexToRGB(hex) {
-    	if (typeof hex !== "string" || hex[0] != '#' || hex.length != 7) return null;
-
-    	return "rgb(" + 
-    	parseInt(hex.substr(1, 2), 16) + 
-    	", " + 
-    	parseInt(hex.substr(3, 2), 16) +
-    	", " +
-    	parseInt(hex.substr(5, 2), 16) +
-    	")";
+    	
     }
 
     /*
@@ -201,5 +199,6 @@
     window.getRandomNumberFromRange = getRandomNumberFromRange;
     window.hexToRGB = hexToRGB;
     window.isHex = isHex;
+    window.isRgb = isRgb;
 })();
 
