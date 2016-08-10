@@ -79,6 +79,13 @@ function ASSERT_ARRAY_EQUAL(a, b, func = function(a, b){return a === b;}){
 
 function ASSERT_TRUE(cond){
     console.log("ASSERT " + "CONDITIONS "+ Boolean(cond));
+    return cond;
+}
+
+function ASSERT_IN_RANGE(x, lower, upper){
+    var cond = x <= upper && x >= lower;
+    console.log(x, " in range of " + lower + " " + upper + " " + Boolean(cond));
+    return cond;
 }
 
 TEST("Constructor Test", function() {
@@ -114,7 +121,7 @@ TEST("Polygon Class Test", function() {
     var poly1 = new Polygon();
 
     ASSERT_TRUE(
-        ASSERT_ARRAY_EQUAL(poly._points, [
+        ASSERT_ARRAY_EQUAL(poly.points, [
         new Point(10, 10),
         new Point(20, 20),
         new Point(30, 30)], ASSERT_OBJECT_EQUAL) &&
@@ -123,12 +130,15 @@ TEST("Polygon Class Test", function() {
 });
 
 TEST("getRandomNumberFromRange Test", function() {
-    var ret = [];
+    var arr = [];
     for (var i = 0; i < 100; i++) {
-        ret.push(getRandomNumberFromRange(0, 100));
+        arr.push(getRandomNumberFromRange(0, 100));
+    }
+    for (var i = 0; i < 100; i++) {
+        arr.push(getRandomNumberFromRange(0, 100, false));
     }
 
-    OUTPUT_ARRAY([ret]);
+    OUTPUT_ARRAY([arr]);
 });
 
 TEST("hexToRGB Test", function() {
@@ -195,6 +205,36 @@ TEST("clamp Test", function(){
         ASSERT_EQUAL(clamp(val2, 2.1, 2.4), 2.4) &&
         ASSERT_EQUAL(clamp(val3, -2, -1), -2) &&
         ASSERT_EQUAL(clamp(val4, 1, 2), 1) );
+});
+
+TEST("getRandomPointOnRect Test", function(){
+    var p1 = new Point(10, 10),
+        p2 = new Point(20, 10),
+        p3 = new Point(20, 20),
+        p4 = new Point(10, 20);
+    var arr = [];
+    var cond = true;
+    for (var i = 0; i < 50; i++){
+        if (!ASSERT_IN_RANGE(getRandomPointOnRect(p1, p2, p3, p4).x, 10, 20))
+            cond = false;
+    }
+    for (var i = 0; i < 50; i++){
+        if (!ASSERT_IN_RANGE(getRandomPointOnRect(p1, p2, p3, p4).y, 10, 20))
+            cond = false;
+    }
+    ASSERT_TRUE(cond);
+});
+
+TEST("getRandomPointOnLine Test", function(){
+    var p1 = new Point(1, 2), p2 = new Point(3, 4);
+    var A = (p1.y - p2.y) / (p1.x - p2.x),
+        B = p1.y - A * p1.x;
+    OUTPUT_INLINE("A", A, "B", B);
+    for (var i = 0; i < 100; i++){
+        var randPoint = getRandomPointOnLine(p1, p2);
+        ASSERT_TRUE(Math.abs(randPoint.y - randPoint.x) <= 1.05 &&
+            Math.abs(randPoint.y - randPoint.x) >= 0.95);
+    }
 });
 
 // TEST("_fillPolygon Test", function(){

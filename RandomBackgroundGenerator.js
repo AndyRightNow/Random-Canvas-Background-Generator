@@ -20,12 +20,12 @@
         this._points = points;
     }
     Polygon.prototype = {
-    	getPoints: function() {
-        return this._points;
+    	get points() {
+            return this._points;
     	},
 
-    	setPoints: function(points) {
-        this._points = points;
+    	set points(points) {
+            this._points = points;
     	}
     };
 
@@ -78,14 +78,30 @@
      *								   clockwise.
      */
     function getRandomPointOnRect(p1, p2, p3, p4) {
+        var width = Math.abs(p2.x - p1.x),
+            height = Math.abs(p3.y - p2.y),
+            topLeftX = Math.min(p1.x, p2.x, p3.x, p4.x),
+            topLeftY = Math.min(p1.y, p2.y, p3.y, p4.y);
 
+        var randomDeltaX = getRandomNumberFromRange(0, width, false),
+            randomDeltaY = getRandomNumberFromRange(0, height, false);
+
+        return new Point(topLeftX + randomDeltaX, topLeftY + randomDeltaY);
     }
 
     /*
      *  Get a random point on a line
+     *  @param {Point} p1, p2: Points of a line from left to right
      */
     function getRandomPointOnLine(p1, p2) {
+        var projectionWidth = Math.abs(p1.x - p2.x),
+            leftX = Math.min(p1.x, p2.x);
 
+        var A = (p1.y - p2.y) / (p1.x - p2.x),
+            B = p1.y - A * p1.x;
+
+        var randomDeltaX = getRandomNumberFromRange(0, projectionWidth, false);
+        return new Point(leftX + randomDeltaX, A * (leftX + randomDeltaX) + B);
     }
 
     /*
@@ -133,7 +149,7 @@
             color = hexToRGB(color);
         }
         else if (!isRgb(color)){
-            return color;
+            return null;
         }
 
         if (color !== null) {
@@ -142,8 +158,19 @@
             });
         }
 
-        return color;
+        return null;
     }
+
+    /*
+     *  Function to generate random color based on a given color 
+     *  with random brightness and random gradient(if specified)
+     *
+     *  @param {string} baseColor: A color string in HEX, RGB or RGBA
+     *  @param {boolean} gradient: A flag indicating if gradient is enabled
+     */
+     function randomColor(baseColor, gradient = false){
+
+     }
 
     /*
      * Constructor
@@ -178,19 +205,19 @@
      *							   The gradient will be randomly generated.
      *
      */
-    RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, gradient) {
+    RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, gradient = false) {
         //	Save the previous states
         this._canvasContext.save();
 
         //---------------------------
         //	Set the color
         //---------------------------
-        // if (gradient) {
+        if (gradient) {
 
-        // }
-        // else {
+        }
+        else {
 
-        // }
+        }
 
         //-----------------------------------
         //	Draw the polygon
@@ -223,5 +250,7 @@
     window.isRgb = isRgb;
     window.adjustColorBrightness = adjustColorBrightness;
     window.clamp = clamp;
+    window.getRandomPointOnRect = getRandomPointOnRect;
+    window.getRandomPointOnLine = getRandomPointOnLine;
 })();
 
