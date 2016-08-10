@@ -30,11 +30,18 @@
     };
 
     /*
-     * Two-dimensional point(vector)
+     *  Two-dimensional point(vector)
      */
      function Point(x = 0, y = 0) {
         this.x = x || 0;
         this.y = y || 0;
+    }
+
+    /*
+     *  Clamp a number within a range
+     */
+    function clamp(x, lower, upper){
+        return x < lower ? lower : x > upper ? upper : x;
     }
 
     /*
@@ -117,11 +124,11 @@
     }
 
     /*
-     *	Darken a color by percentage
+     *	Adjust the brightness of a color by percentage
      *  @param {string} color: The color string
-     *  @param {float} percentage: A float within [0, 1] by which the color is darkened
+     *  @param {float} percentage: A float within [-1, 1] by which the brightness is adjusted
      */
-    function darkenColor(color, percentage = 0) {
+    function adjustColorBrightness(color, percentage = 0) {
         if (isHex(color)) {
             color = hexToRGB(color);
         }
@@ -131,18 +138,11 @@
 
         if (color !== null) {
             return color.replace(/[0-2]{0,1}[0-5]{0,1}[0-5]{1}/gi, function(e){
-                return (parseInt(e) * (1 - percentage)).toString();
+                return clamp((parseInt(e) * (1 - percentage)), 0, 255).toString();
             });
         }
 
         return color;
-    }
-
-    /*
-     *	Brighten a color by percentage
-     */
-    function brightenColor(color, percentage) {
-
     }
 
     /*
@@ -221,6 +221,7 @@
     window.hexToRGB = hexToRGB;
     window.isHex = isHex;
     window.isRgb = isRgb;
-    window.darkenColor = darkenColor;
+    window.adjustColorBrightness = adjustColorBrightness;
+    window.clamp = clamp;
 })();
 
