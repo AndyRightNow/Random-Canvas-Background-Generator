@@ -71,7 +71,7 @@
     }
 
     /*
-     *  Get a random point from a rectangle
+     *  Get a random point on a rectangle
      *
      *	@param {Point} p1, p2, p3, p4: Points of a rectangle starting 
      *								   from the top left corner and going
@@ -82,7 +82,7 @@
     }
 
     /*
-     *  Get a random point at a line
+     *  Get a random point on a line
      */
     function getRandomPointOnLine(p1, p2) {
 
