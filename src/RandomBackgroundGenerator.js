@@ -1,8 +1,10 @@
+/*jshint esversion: 6 */
+
 /*
  *	Random Canvas Background Generator
  *
  *	It's used on HTML Canvas to generate random background in a certain pattern
- *	with certain customized parameters and modes. The background 
+ *	with certain customized parameters and modes. The background
  * 	will update every time you click it.
  *
  */
@@ -73,7 +75,7 @@
     /*
      *  Get a random point on a rectangle
      *
-     *	@param {Point} p1, p2, p3, p4: Points of a rectangle starting 
+     *	@param {Point} p1, p2, p3, p4: Points of a rectangle starting
      *								   from the top left corner and going
      *								   clockwise.
      */
@@ -131,9 +133,9 @@
      */
     function hexToRGB(hex) {
     	if (isHex(hex)) {
-            return "rgb(" + 
-            parseInt(hex.substr(1, 2), 16) + ", " + 
-            parseInt(hex.substr(3, 2), 16) + ", " + 
+            return "rgb(" +
+            parseInt(hex.substr(1, 2), 16) + ", " +
+            parseInt(hex.substr(3, 2), 16) + ", " +
             parseInt(hex.substr(5, 2), 16) + ")";
         }
         else return isRgb(hex) ? hex : null;
@@ -162,7 +164,7 @@
     }
 
     /*
-     *  Function to generate random color based on a given color 
+     *  Function to generate random color based on a given color
      *  with random brightness and random gradient(if specified)
      *
      *  @param {string} baseColor: A color string in HEX, RGB or RGBA
@@ -181,7 +183,7 @@
      * @param {string} canvasId: The id of the canvas you want to generate background on
      */
     function RandomBackgroundGenerator(canvasId, mode = POLYGONAL) {
-        //	Initialize 
+        //	Initialize
         this._mode = mode;
         this._canvas = document.getElementById(canvasId);
         if (this._canvas !== null) {
@@ -198,10 +200,10 @@
     /*
      *	Private helper function used to draw polygon on the canvas
      *
-     *	@param {string} color: A HEX, RGB or RGBA color in the form of 
+     *	@param {string} color: A HEX, RGB or RGBA color in the form of
      *						   "#000000", "rgb(0, 0, 0)" or "rgba(0, 0, 0, 1)"
      *	@param {Array} points: An array of Point objects
-     *	@param {boolean} gradient: A flag indicating if linear-gradient is enabled. 
+     *	@param {boolean} gradient: A flag indicating if linear-gradient is enabled.
      *							   The gradient will be randomly generated.
      *
      */
@@ -253,4 +255,3 @@
     window.getRandomPointOnRect = getRandomPointOnRect;
     window.getRandomPointOnLine = getRandomPointOnLine;
 })();
-
