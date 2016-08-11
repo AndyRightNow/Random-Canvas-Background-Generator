@@ -239,19 +239,21 @@
         this._canvasContext.restore();
     };
 
-
     //	Export to window
-    window.RandomBackgroundGenerator = RandomBackgroundGenerator;
+    //window.RandomBackgroundGenerator = RandomBackgroundGenerator;
 
-    ////////////////////////////////////////////////////////////////////////DEBUG////////////////////////////////////////////////////////////
-    window.Polygon = Polygon;
-    window.Point = Point;
-    window.getRandomNumberFromRange = getRandomNumberFromRange;
-    window.hexToRGB = hexToRGB;
-    window.isHex = isHex;
-    window.isRgb = isRgb;
-    window.adjustColorBrightness = adjustColorBrightness;
-    window.clamp = clamp;
-    window.getRandomPointOnRect = getRandomPointOnRect;
-    window.getRandomPointOnLine = getRandomPointOnLine;
+    ////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
+		var exports = module.exports = {};
+		exports.Polygon = Polygon;
+    exports.Point = Point;
+    exports.getRandomNumberFromRange = getRandomNumberFromRange;
+    exports.hexToRGB = hexToRGB;
+    exports.isHex = isHex;
+    exports.isRgb = isRgb;
+    exports.adjustColorBrightness = adjustColorBrightness;
+    exports.clamp = clamp;
+    exports.getRandomPointOnRect = getRandomPointOnRect;
+    exports.getRandomPointOnLine = getRandomPointOnLine;
+		////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
+
 })();
