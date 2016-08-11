@@ -244,6 +244,7 @@
 
     ////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
 		var exports = module.exports = {};
+		exports.RandomBackgroundGenerator = RandomBackgroundGenerator;
 		exports.Polygon = Polygon;
     exports.Point = Point;
     exports.getRandomNumberFromRange = getRandomNumberFromRange;
@@ -255,5 +256,4 @@
     exports.getRandomPointOnRect = getRandomPointOnRect;
     exports.getRandomPointOnLine = getRandomPointOnLine;
 		////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
-
 })();
