@@ -10,9 +10,8 @@ gulp.task('test', function(){
 
 gulp.task('dist', function(){
   return gulp.src('src/RandomBackgroundGenerator.js')
-    .pipe(replace('//window', 'window'))  //  Uncomment the line to export to the window
     .pipe(deleteLines({
-      'filters': [/DEBUG/]  //  Delete debugging codes
+      'filters': [/DEBUG/]  //  Delete debugging comments
     }))
     .pipe(deleteLines({
       'filters': [/exports/]  //  Delete exporting modules codes

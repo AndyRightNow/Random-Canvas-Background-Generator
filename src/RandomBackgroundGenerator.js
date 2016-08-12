@@ -8,7 +8,7 @@
  * 	will update every time you click it.
  *
  */
-(function() {
+var RandomBackgroundGenerator = (function() {
 	"use strict";
     /*
      *	Constant string name
@@ -238,10 +238,6 @@
         //	Restore previous states
         this._canvasContext.restore();
     };
-
-    //	Export to window
-    //window.RandomBackgroundGenerator = RandomBackgroundGenerator;
-
     ////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
 		var exports = module.exports = {};
 		exports.RandomBackgroundGenerator = RandomBackgroundGenerator;
