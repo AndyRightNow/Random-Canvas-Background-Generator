@@ -11,16 +11,18 @@
     "url": "git+https://github.com/AndyRightNow/Random-Canvas-Background-Generator.git"
   },
   "author": "Andy",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AndyRightNow/Random-Canvas-Background-Generator/issues"
   },
   "homepage": "https://github.com/AndyRightNow/Random-Canvas-Background-Generator#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-delete-lines": "0.0.7",
     "gulp-jasmine": "^2.4.0",
     "gulp-replace": "^0.5.4",
+    "gulp-uglify": "^2.0.0",
     "jasmine": "^2.4.1"
   }
 }
