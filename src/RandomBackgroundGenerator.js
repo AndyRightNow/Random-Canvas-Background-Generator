@@ -172,7 +172,7 @@ var RandomBackgroundGenerator = (function() {
 	 *												  1 means generate around maximum brightness changes.
 	 *												  The brightness changes will be either drakening or brightening.
      */
-     function randomColor(baseColor, brightnessIntensity = 0.5){
+	 function randomColor(baseColor, brightnessIntensity = 0.5){
 		 var threshold = 0.2,
 		 	 rangeLower = clamp(brightnessIntensity - threshold, 0, 1),
 			 rangeUpper = clamp(brightnessIntensity + threshold, 0, 1);
@@ -184,7 +184,20 @@ var RandomBackgroundGenerator = (function() {
 
 		 //	Color validity checking in adjustColorBrightness
 		 return adjustColorBrightness(baseColor, randomArr[getRandomNumberFromRange(0, 2)]);
-     }
+	 }
+
+	/*
+	 *  Function to generate random color with random gradient
+	 *  based on a given color
+	 *
+	 *	@return {Object} A gradient color object used for canvas drawing
+	 *  @param {string} baseColor: A color string in HEX, RGB or RGBA
+	 *	@param {Point} startPoint: The start point of gradient
+	 *	@param {Point} endPoint: The end point of gradient
+	 */
+	 function randomGradientColor(baseColor, startPoint, endPoint) {
+		 
+	 }
 
     /*
      * Constructor
