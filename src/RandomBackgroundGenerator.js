@@ -144,19 +144,16 @@ var RandomBackgroundGenerator = (function() {
     /*
      *	Adjust the brightness of a color by percentage
      *  @param {string} color: The color string
-     *  @param {float} percentage: A float within [-1, 1] by which the brightness is adjusted
+     *  @param {float} percentage: A float within [-1, 1] by which the brightness is adjusted.
+	 *							   1 means maximum darkness and -1 means maximum brightness.
      */
     function adjustColorBrightness(color, percentage = 0) {
-        if (isHex(color)) {
-            color = hexToRGB(color);
-        }
-        else if (!isRgb(color)){
-            return null;
-        }
+        color = hexToRGB(color);
 
         if (color !== null) {
-            return color.replace(/[0-2]{0,1}[0-5]{0,1}[0-5]{1}/gi, function(e){
-                return clamp((parseInt(e) * (1 - percentage)), 0, 255).toString();
+			//	Math 'n,' in order to exclude the alpha
+            return color.replace(/[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,/gi, function(e){
+                return clamp((parseInt(e) * (1 - percentage)), 0, 255).toString() + ",";
             });
         }
 
@@ -164,14 +161,29 @@ var RandomBackgroundGenerator = (function() {
     }
 
     /*
-     *  Function to generate random color based on a given color
-     *  with random brightness and random gradient(if specified)
+     *  Function to generate random color with random brightness
+     *  based on a given color
      *
+	 *	@return {string} A string of generated color
      *  @param {string} baseColor: A color string in HEX, RGB or RGBA
-     *  @param {boolean} gradient: A flag indicating if gradient is enabled
+	 *	@param {float} brightnessIntensity(Optional): The brightness intensity within [0, 1] to generate
+	 *												  around. 0 means generate around 0 brightness changes,
+	 *												  0.5 means generate around 50% brightness changes and
+	 *												  1 means generate around maximum brightness changes.
+	 *												  The brightness changes will be either drakening or brightening.
      */
-     function randomColor(baseColor, gradient = false){
+     function randomColor(baseColor, brightnessIntensity = 0.5){
+		 var threshold = 0.2,
+		 	 rangeLower = clamp(brightnessIntensity - threshold, 0, 1),
+			 rangeUpper = clamp(brightnessIntensity + threshold, 0, 1);
 
+		 //	Used to get a either negative or positive random number
+		 var randomArr = [
+			 getRandomNumberFromRange(rangeLower, rangeUpper, false),
+		 	 getRandomNumberFromRange(-rangeLower, -rangeUpper, false)];
+
+		 //	Color validity checking in adjustColorBrightness
+		 return adjustColorBrightness(baseColor, randomArr[getRandomNumberFromRange(0, 2)]);
      }
 
     /*
@@ -188,12 +200,6 @@ var RandomBackgroundGenerator = (function() {
         this._canvas = document.getElementById(canvasId);
         if (this._canvas !== null) {
             this._canvasContext = this._canvas.getContext('2d');
-
-            //--------------------------------------
-            //	Listen to click event and when clicking
-            //	the canvas, update the background.
-            //--------------------------------------
-            this._canvas.addEventListener("click", function(event) {});
         }
     }
 
@@ -239,9 +245,9 @@ var RandomBackgroundGenerator = (function() {
         this._canvasContext.restore();
     };
     ////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
-		var exports = module.exports = {};
-		exports.RandomBackgroundGenerator = RandomBackgroundGenerator;
-		exports.Polygon = Polygon;
+	var exports = module.exports = {};
+	exports.RandomBackgroundGenerator = RandomBackgroundGenerator;
+	exports.Polygon = Polygon;
     exports.Point = Point;
     exports.getRandomNumberFromRange = getRandomNumberFromRange;
     exports.hexToRGB = hexToRGB;
@@ -251,5 +257,6 @@ var RandomBackgroundGenerator = (function() {
     exports.clamp = clamp;
     exports.getRandomPointOnRect = getRandomPointOnRect;
     exports.getRandomPointOnLine = getRandomPointOnLine;
-		////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
+	exports.randomColor = randomColor;
+	////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
 })();
