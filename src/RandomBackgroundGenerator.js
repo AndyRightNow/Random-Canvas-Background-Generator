@@ -116,29 +116,39 @@ var RandomBackgroundGenerator = (function() {
     }
 
     /*
-     *  Check if a string is in a rgb or rgba color format
+     *  Check if a string is in a rgb color format
      *  @return {boolean} True if the string is in a rgb format
      *  @param {string} color: The string representing the color
      */
      function isRgb(color) {
         //  Eliminate white spaces
         color = color.replace(/\s/g, "");
-        return /a/gi.test(color) ? /rgba\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0]{0,1}[.]{0,1}[0-9]{1,2}\)/gi.test(color)
-            : /rgb\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\)/gi.test(color);
+        return /rgb\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\)/i.test(color);
      }
+	 /*
+	*  Check if a string is in a rgba color format
+	*  @return {boolean} True if the string is in a rgba format
+	*  @param {string} color: The string representing the color
+	*/
+	function isRgba(color) {
+	 //  Eliminate white spaces
+	 color = color.replace(/\s/g, "");
+	 return /rgba\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0]{0,1}[.]{0,1}[0-9]{1,2}\)/i.test(color);
+
+	}
 
     /*
      *	Convert hex color to rgb color
      *  @return {string / null} Converted color string or null if the input is invalid
      */
-    function hexToRGB(hex) {
+    function hexToRgb(hex) {
     	if (isHex(hex)) {
             return "rgb(" +
             parseInt(hex.substr(1, 2), 16) + ", " +
             parseInt(hex.substr(3, 2), 16) + ", " +
             parseInt(hex.substr(5, 2), 16) + ")";
         }
-        else return isRgb(hex) ? hex : null;
+        else return isRgb(hex) || isRgba(hex) ? hex : null;
     }
 
     /*
@@ -148,12 +158,19 @@ var RandomBackgroundGenerator = (function() {
 	 *							   1 means maximum darkness and -1 means maximum brightness.
      */
     function adjustColorBrightness(color, percentage = 0) {
-        color = hexToRGB(color);
+        color = hexToRgb(color);
 
         if (color !== null) {
+			//-------------------------------------------
+			//	Use different regex and formats for rgb and rgba
+			//-------------------------------------------
+			var regx = isRgb(color) ?
+				/[0-2]{0,1}[0-5]{0,1}[0-5]{1}/gi : /[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,/gi;
+			var postfix = isRgb(color) ? '' : ',';
+
 			//	Math 'n,' in order to exclude the alpha
-            return color.replace(/[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,/gi, function(e){
-                return clamp((parseInt(e) * (1 - percentage)), 0, 255).toString() + ",";
+            return color.replace(regx, function(e){
+                return clamp((parseInt(e) * (1 - percentage)), 0, 255).toString() + postfix;
             });
         }
 
@@ -187,16 +204,19 @@ var RandomBackgroundGenerator = (function() {
 	 }
 
 	/*
-	 *  Function to generate random color with random gradient
-	 *  based on a given color
+	 *  Function to generate random gradient color with random brightness on both sides
+	 *  of the linear gradient based on a given color
 	 *
-	 *	@return {Object} A gradient color object used for canvas drawing
+	 *	@return {Object} An object containing the pair of colors
 	 *  @param {string} baseColor: A color string in HEX, RGB or RGBA
-	 *	@param {Point} startPoint: The start point of gradient
-	 *	@param {Point} endPoint: The end point of gradient
+	 *	@param {float} brightnessIntensity(Optional): The brightness intensity within [0, 1] to generate
+	 *												  around. The same as the one in randomColor
 	 */
-	 function randomGradientColor(baseColor, startPoint, endPoint) {
-		 
+	 function randomGradient(baseColor, brightnessIntensity = 0.5) {
+		 return {
+			 first: randomColor(baseColor, brightnessIntensity),
+			 second: randomColor(baseColor, brightnessIntensity)
+		 };
 	 }
 
     /*
@@ -263,13 +283,15 @@ var RandomBackgroundGenerator = (function() {
 	exports.Polygon = Polygon;
     exports.Point = Point;
     exports.getRandomNumberFromRange = getRandomNumberFromRange;
-    exports.hexToRGB = hexToRGB;
+    exports.hexToRgb = hexToRgb;
     exports.isHex = isHex;
     exports.isRgb = isRgb;
+	exports.isRgba = isRgba;
     exports.adjustColorBrightness = adjustColorBrightness;
     exports.clamp = clamp;
     exports.getRandomPointOnRect = getRandomPointOnRect;
     exports.getRandomPointOnLine = getRandomPointOnLine;
 	exports.randomColor = randomColor;
+	exports.randomGradient = randomGradient;
 	////////////////////////////////////////////////////////////////////////DEBUG///////////////////////////////////////////////////////////
 })();
