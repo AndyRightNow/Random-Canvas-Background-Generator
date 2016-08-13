@@ -17,7 +17,7 @@ function isHex(color) {
  function isRgb(color) {
     //  Eliminate white spaces
     color = color.replace(/\s/g, "");
-    return /rgb\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\)/i.test(color);
+    return /rgb\([\d]{1,3}[.]?[\d]*\,[\d]{1,3}[.]?[\d]*\,[\d]{1,3}[.]?[\d]*\)/i.test(color);
 }
  /*
 *  Check if a string is in a rgba color format
@@ -27,7 +27,7 @@ function isHex(color) {
 function isRgba(color) {
  //  Eliminate white spaces
  color = color.replace(/\s/g, "");
- return /rgba\([0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,[0]{0,1}[.]{0,1}[0-9]{1,2}\)/i.test(color);
+ return /rgba\([\d]{1,3}[.]?[\d]*\,[\d]{1,3}[.]?[\d]*\,[\d]{1,3}[.]?[\d]*\,[\d]{1,3}[.]?[\d]*\)/i.test(color);
 
 }
 
@@ -60,12 +60,13 @@ function adjustColorBrightness(color, percentage) {
         //	Use different regex and formats for rgb and rgba
         //-------------------------------------------
         var regx = isRgb(color) ?
-            /[0-2]{0,1}[0-5]{0,1}[0-5]{1}/gi : /[0-2]{0,1}[0-5]{0,1}[0-5]{1}\,/gi;
+            /[\d]{1,3}[.]?[\d]*/gi : /[\d]{1,3}[.]?[\d]*\,/gi;
         var postfix = isRgb(color) ? '' : ',';
 
         //	Math 'n,' in order to exclude the alpha
         return color.replace(regx, function(e){
-            return utils.clamp((parseInt(e) * (1 - percentage)), 0, 255).toString() + postfix;
+            return Math.round(utils.clamp((parseInt(e) * (1 - percentage)), 0, 255))
+                .toString() + postfix;
         });
     }
 

@@ -56,9 +56,6 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 	//---------------------------
 	if (gradient) {
 		if (polygon.points.length === 3) {
-			let randomIntensity = Math.random();
-			let gradColors = colorUtils.randomGradient(randomColor(color), randomIntensity);
-
 			let startPoint = polygon.points[utils.getRandomNumberFromRange(0, polygon.points.length)];
 			let endPoint;
 
@@ -72,6 +69,12 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 
 			let grad = this._canvasContext.createLinearGradient(
 				startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+
+			let randomIntensity = Math.random() + 1 * 0.5;
+			let gradColors = colorUtils.randomGradient(colorUtils.randomColor(color), randomIntensity);
+
+			grad.addColorStop(0, gradColors.first);
+			grad.addColorStop(1, gradColors.second);
 
 			this._canvasContext.fillStyle = grad;
 		}
@@ -87,7 +90,7 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 	//	Draw the polygon
 	//-----------------------------------
 	this._canvasContext.beginPath();
-	var points = polygon.getPoints();
+	var points = polygon.points;
 	for (var i = 0; i < points.length; i++) {
 		if (i === 0) {
 			this._canvasContext.moveTo(points[i].x, points[i].y);
@@ -102,4 +105,5 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 	this._canvasContext.restore();
 };
 
+//	Exports
 module.exports = RandomBackgroundGenerator;

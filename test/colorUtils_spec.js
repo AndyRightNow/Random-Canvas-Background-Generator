@@ -35,7 +35,7 @@ describe('isRgb', function(){
         var color1 = "#010101",
             color2 = "rgba(0, 23, 34)",
             color3 = "rgb(0, 23, 34, 5)",
-            color4 = "rgb(0, 23, 34)",
+            color4 = "rgb(0, 63, 34)",
             color5 = 'rgba(0, 0, 0, 1)',
             color6 = 'rgb(2232, 2312321423, 123123)';
         expect(colorUtils.isRgb(color1)).toBe(false);
@@ -43,7 +43,7 @@ describe('isRgb', function(){
         expect(colorUtils.isRgb(color3)).toBe(false);
         expect(colorUtils.isRgb(color4)).toBe(true);
         expect(colorUtils.isRgb(color5)).toBe(false);
-        expect(colorUtils.isRgb(color6)).toBe(false);
+        expect(colorUtils.isRgb(color6)).toBe(true);
     });
 });
 
