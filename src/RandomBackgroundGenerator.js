@@ -1,11 +1,11 @@
 /*jshint esversion: 6 */
 
 /*
- *	Random Canvas Background Generator
+ * Random Canvas Background Generator
  *
- *	It's used on HTML Canvas to generate random background in a certain pattern
- *	with certain customized parameters and modes. The background
- * 	will update every time you call generate()
+ * It's used on HTML Canvas to generate random background in a certain pattern
+ * with certain customized parameters and modes. The background
+ * will update every time you call generate()
  *
  */
 
@@ -32,16 +32,16 @@ function RandomBackgroundGenerator(canvasId, mode) {
 	//	Initialize
 	this._mode = mode || POLYGONAL;
 	this._canvas = typeof document !== 'undefined' ? document.getElementById(canvasId) : null;
-    this._canvasContext = this._canvas ? this._canvas.getContext('2d') : null;
+	this._canvasContext = this._canvas ? this._canvas.getContext('2d') : null;
 }
 
 /*
- *	Private helper function used to draw polygon on the canvas
+ * Private helper function used to draw polygon on the canvas
  *
- *	@param {string} color: A HEX, RGB or RGBA color in the form of
+ * @param {string} color: A HEX, RGB or RGBA color in the form of
  *						   "#000000", "rgb(0, 0, 0)" or "rgba(0, 0, 0, 1)"
- *	@param {Array} points: An array of Point objects
- *	@param {boolean} gradient: A flag indicating if linear-gradient is enabled.
+ * @param {Array} points: An array of Point objects
+ * @param {boolean} gradient: A flag indicating if linear-gradient is enabled.
  *							   The gradient will be randomly generated.
  *
  */

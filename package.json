@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/AndyRightNow/Random-Canvas-Background-Generator/issues"
   },
-  "homepage": "https://github.com/AndyRightNow/Random-Canvas-Background-Generator#readme",
+  "homepage": "https://github.com/AndyRightNow/Random-Canvas-Background-Generator/blob/master/README.md",
   "devDependencies": {
     "jasmine": "^2.4.1",
     "webpack": "^1.13.1"
