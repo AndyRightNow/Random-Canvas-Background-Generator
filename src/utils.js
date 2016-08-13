@@ -1,3 +1,5 @@
+var Vector = require('./vector');
+
 /*
  *	Polygon class
  */
@@ -13,14 +15,6 @@ Polygon.prototype = {
         this._points = points;
     }
 };
-
-/*
- *  Two-dimensional point(vector)
- */
- function Point(x, y) {
-    this.x = x || 0;
-    this.y = y || 0;
-}
 
 /*
  *  Clamp a number within a range
@@ -59,7 +53,7 @@ function clamp(x, lower, upper){
 /*
  *  Get a random point on a rectangle
  *
- *	@param {Point} p1, p2, p3, p4: Points of a rectangle starting
+ *	@param {Vector} p1, p2, p3, p4: Points of a rectangle starting
  *								   from the top left corner and going
  *								   clockwise.
  */
@@ -72,12 +66,12 @@ function getRandomPointOnRect(p1, p2, p3, p4) {
     var randomDeltaX = getRandomNumberFromRange(0, width, false),
         randomDeltaY = getRandomNumberFromRange(0, height, false);
 
-    return new Point(topLeftX + randomDeltaX, topLeftY + randomDeltaY);
+    return new Vector(topLeftX + randomDeltaX, topLeftY + randomDeltaY);
 }
 
 /*
  *  Get a random point on a line
- *  @param {Point} p1, p2: Points of a line from left to right
+ *  @param {Vector} p1, p2: Points of a line from left to right
  */
 function getRandomPointOnLine(p1, p2) {
     var projectionWidth = Math.abs(p1.x - p2.x),
@@ -87,12 +81,11 @@ function getRandomPointOnLine(p1, p2) {
         B = p1.y - A * p1.x;
 
     var randomDeltaX = getRandomNumberFromRange(0, projectionWidth, false);
-    return new Point(leftX + randomDeltaX, A * (leftX + randomDeltaX) + B);
+    return new Vector(leftX + randomDeltaX, A * (leftX + randomDeltaX) + B);
 }
 
 //  Exports
 module.exports.Polygon = Polygon;
-module.exports.Point = Point;
 module.exports.clamp = clamp;
 module.exports.getRandomNumberFromRange = getRandomNumberFromRange;
 module.exports.getRandomPointOnRect = getRandomPointOnRect;

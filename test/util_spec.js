@@ -1,33 +1,20 @@
 /*jshint esversion: 6 */
 var utils = require('./../src/utils');
-
-describe('Point', function(){
-    it('is a point(vector) with two members: x and y', function(){
-        var p1 = new utils.Point(),
-            p2 = new utils.Point(1, 1),
-            p3 = new utils.Point(0.2131);
-        expect(p1.x).toEqual(0);
-        expect(p1.y).toEqual(0);
-        expect(p2.x).toEqual(1);
-        expect(p2.y).toEqual(1);
-        expect(p3.x).toEqual(0.2131);
-        expect(p3.y).toEqual(0);
-    });
-});
+var Vector = require('./../src/vector');
 
 describe('Polygon', function(){
     it('is a polygon with points to specify its shape and position', function(){
         var poly1 = new utils.Polygon([
-            new utils.Point(10, 12),
-            new utils.Point(22, 23),
-            new utils.Point(32, 23),
-            new utils.Point(42, 73),
-            new utils.Point(52, 63),
-            new utils.Point(62, 43)
+            new Vector(10, 12),
+            new Vector(22, 23),
+            new Vector(32, 23),
+            new Vector(42, 73),
+            new Vector(52, 63),
+            new Vector(62, 43)
             ]),
             poly2 = new utils.Polygon();
         for (let i = 0; i < poly1.points.length; i++) {
-            expect(poly1.points[i]).toEqual(jasmine.any(utils.Point));
+            expect(poly1.points[i]).toEqual(jasmine.any(Vector));
         }
         expect(poly2.points.length).toEqual(0);
         expect(poly1.points[0].x).toEqual(10);
@@ -77,13 +64,13 @@ describe('clamp', function(){
 
 describe('getRandomPointOnRect', function(){
     it('is a function to get a random point on a rectangle', function(){
-        var p1 = new utils.Point(0, 0),
-            p2 = new utils.Point(10, 0),
-            p3 = new utils.Point(10, 10),
-            p4 = new utils.Point(0, 10);
+        var p1 = new Vector(0, 0),
+            p2 = new Vector(10, 0),
+            p3 = new Vector(10, 10),
+            p4 = new Vector(0, 10);
         for (let i = 0; i < 100; i++) {
             var randPoint = utils.getRandomPointOnRect(p1, p2, p3, p4);
-            expect(randPoint).toEqual(jasmine.any(utils.Point));
+            expect(randPoint).toEqual(jasmine.any(Vector));
             expect(randPoint.x).not.toBeLessThan(0);
             expect(randPoint.x).not.toBeGreaterThan(10);
             expect(randPoint.y).not.toBeLessThan(0);
@@ -94,11 +81,11 @@ describe('getRandomPointOnRect', function(){
 
 describe('getRandomPointOnLine', function(){
     it('is a function to get a random point on a line', function(){
-        var p1 = new utils.Point(0, 0),
-            p2 = new utils.Point(10, 10);
+        var p1 = new Vector(0, 0),
+            p2 = new Vector(10, 10);
         for (let i = 0; i < 100; i++) {
             var randPoint = utils.getRandomPointOnLine(p1, p2);
-            expect(randPoint).toEqual(jasmine.any(utils.Point));
+            expect(randPoint).toEqual(jasmine.any(Vector));
             expect(randPoint.x).toEqual(randPoint.y);
         }
     });
