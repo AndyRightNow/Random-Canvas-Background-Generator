@@ -10,13 +10,17 @@
  */
 var RandomBackgroundGenerator = (function() {
 	"use strict";
+
+	//-------------------------------
+	//	Dependencies
+	//-------------------------------
+	var utils = require('./utils');
+	var colorUtils = require('./colorUtils');
+
     /*
      *	Constant string name
      */
     const POLYGONAL = "Polygonal";
-
-	var utils = require('./utils');
-	var colorUtils = require('./colorUtils');
 
     /*
      * Constructor
