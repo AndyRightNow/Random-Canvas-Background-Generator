@@ -1,13 +1,7 @@
 /*
- *
- *
- *
  *              Vector Class
  *
  *      Vector and vector operations.
- *
- *
- *
  */
 
 /*

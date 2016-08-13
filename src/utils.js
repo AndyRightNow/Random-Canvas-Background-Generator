@@ -84,9 +84,29 @@ function getRandomPointOnLine(p1, p2) {
     return new Vector(leftX + randomDeltaX, A * (leftX + randomDeltaX) + B);
 }
 
+/*
+ * Helper function used to create inheritance
+ *
+ * @return none
+ * @param {Function} ctor: The constructor of the current object
+ * @param {Function} superCtor: The constructor of the parent object
+ */
+ function inherit(ctor, superCtor) {
+     ctor._super = superCtor;
+     ctor.prototype = Object.create(superCtor.prototype, {
+         constructor: {
+             value: ctor,
+             enumerable: false,
+             writable: true,
+             configurable: true
+         }
+     });
+ }
+
 //  Exports
 module.exports.Polygon = Polygon;
 module.exports.clamp = clamp;
 module.exports.getRandomNumberFromRange = getRandomNumberFromRange;
 module.exports.getRandomPointOnRect = getRandomPointOnRect;
 module.exports.getRandomPointOnLine = getRandomPointOnLine;
+module.exports.inherit = inherit;

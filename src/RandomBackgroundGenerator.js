@@ -24,9 +24,9 @@ const POLYGONAL = "Polygonal";
 /*
 * Constructor
 *
+* @param {string} canvasId: The id of the canvas you want to generate background on
 * @param {string} mode: The pattern in which the background is generated.
 *						 Currently Support: 1. "Polygonal"
-* @param {string} canvasId: The id of the canvas you want to generate background on
 */
 function RandomBackgroundGenerator(canvasId, mode) {
 	//	Initialize
@@ -119,6 +119,17 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 
 	//	Restore previous states
 	this._canvasContext.restore();
+};
+
+RandomBackgroundGenerator.prototype.generate = function(){
+	//	Clear the canvas
+
+	//	Draw the background
+		//	Generate points on the canvas
+
+		//	Connect all adjacent points
+
+		//	Fill the triangles formed by the points
 };
 
 //	Exports
