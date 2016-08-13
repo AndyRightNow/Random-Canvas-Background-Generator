@@ -31,10 +31,8 @@ const POLYGONAL = "Polygonal";
 function RandomBackgroundGenerator(canvasId, mode) {
 	//	Initialize
 	this._mode = mode || POLYGONAL;
-	this._canvas = document.getElementById(canvasId);
-	if (this._canvas !== null) {
-	    this._canvasContext = this._canvas.getContext('2d');
-	}
+	this._canvas = typeof document !== 'undefined' ? document.getElementById(canvasId) : null;
+    this._canvasContext = this._canvas ? this._canvas.getContext('2d') : null;
 }
 
 /*
