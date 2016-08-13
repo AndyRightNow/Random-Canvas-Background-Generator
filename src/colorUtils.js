@@ -63,7 +63,10 @@ function adjustColorBrightness(color, percentage) {
             /[\d]{1,3}[.]?[\d]*/gi : /[\d]{1,3}[.]?[\d]*\,/gi;
         var postfix = isRgb(color) ? '' : ',';
 
-        //	Math 'n,' in order to exclude the alpha
+        //-------------------------------------------------
+        //  Replace the r, g and b with adjusted numbers and
+        //  round them to integers
+        //-------------------------------------------------
         return color.replace(regx, function(e){
             return Math.round(utils.clamp((parseInt(e) * (1 - percentage)), 0, 255))
                 .toString() + postfix;

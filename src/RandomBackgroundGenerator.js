@@ -55,24 +55,40 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 	//	Set the color
 	//---------------------------
 	if (gradient) {
-		if (polygon.points.length === 3) {
+		if (polygon.points.length === 3) {	//	If it's a triangle
+			//-------------------------------------------
+			//	Start and end points of the linear gradient
+			//	The start point is randomly selected
+			//-------------------------------------------
 			let startPoint = polygon.points[utils.getRandomNumberFromRange(0, polygon.points.length)];
 			let endPoint;
 
+			//-------------------------------------
+			//	Fetch points other than the start point
+			//	out of the polygon
+			//-------------------------------------
 			let index = polygon.points.indexOf(startPoint);
 			let line = [];
 			for (let i = 0; i < polygon.points.length; i++)
 				if (i !== index) line.push(polygon.points[i]);
 
+			//-------------------------------------
+			//	Project the start point to the line
+			//	it's facing and that's the end point
+			//-------------------------------------
 			let axis = new Vector(line[0].x - line[1].x, line[0].y - line[1].y);
 			endPoint = startPoint.project(axis);
 
+			//	Create the linear gradient object
 			let grad = this._canvasContext.createLinearGradient(
 				startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 
+			//------------------------------------
+			//	Get random linear gradient colors
+			//	and add colors
+			//------------------------------------
 			let randomIntensity = Math.random() + 1 * 0.5;
 			let gradColors = colorUtils.randomGradient(colorUtils.randomColor(color), randomIntensity);
-
 			grad.addColorStop(0, gradColors.first);
 			grad.addColorStop(1, gradColors.second);
 
