@@ -5,7 +5,7 @@
  *
  *	It's used on HTML Canvas to generate random background in a certain pattern
  *	with certain customized parameters and modes. The background
- * 	will update every time you click it.
+ * 	will update every time you call generate()
  *
  */
 
