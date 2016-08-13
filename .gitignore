@@ -2,3 +2,4 @@ node_modules
 test/test.html
 test/test.jade
 spec
+webpack.config.js
