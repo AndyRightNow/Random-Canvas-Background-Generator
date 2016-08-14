@@ -73,43 +73,55 @@ PolygonalMode.prototype.DENSITY_RATO_DIF =
 
 /*
  * Private helper function - generate points to draw with
+ * It divides the whole canvas into small grids and generate a random point in every
+ * grid
  *
  * @return none
  */
 PolygonalMode.prototype._generatePrimitives = function() {
+    //-----------------------------------------
     //  Width and height of every small grid
+    //-----------------------------------------
     var ratio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._density;
     var widthInterval =  ratio * this._width,
         heightInterval = ratio * this._height;
 
-    //  Counts of rows and columns plus the top and left bounds of the rectangle
+    //-------------------------------------------------
+    //  Counts of rows and columns plus the top
+    //  and left bounds of the rectangle
+    //-------------------------------------------------
     var rowCount = Math.floor(this._width / widthInterval) + 1,
         colCount = Math.floor(this._height / heightInterval) + 1;
 
+    //  Use a graph to represent the grids on the canvas
     var graph = new Graph(rowCount, colCount);
 
-    //  Points of the small grid
+    //-------------------------------
+    //  Points of every small grid
+    //-------------------------------
     var p1 = new Vector(0, 0),
         p2 = new Vector(widthInterval, 0),
         p3 = new Vector(widthInterval, heightInterval),
         p4 = new Vector(0, heightInterval);
-    //t\.LOG\(.*\)\;
 
+    //--------------------------------------------
     //  Randomly generate points on the canvas
+    //--------------------------------------------
     for (let i = 0; i < rowCount; i++) {
         for (let j = 0; j < colCount; j++) {
             var randPoint;
-            if (j === 0) {
+
+            if (j === 0) {  //  If at the left bound
                 randPoint = utils.getRandomPointOnRect(p1, p1, p4, p4);
             }
-            else if (j === colCount - 1) {
+            else if (j === colCount - 1) {   //  If at the right bound
                 randPoint = utils.getRandomPointOnRect(p2, p2, p3, p3);
             }
             else {
-                if (i === 0) {
+                if (i === 0) {   //  If at the top bound
                     randPoint = utils.getRandomPointOnRect(p1, p2, p2, p1);
                 }
-                else if (i === rowCount - 1) {
+                else if (i === rowCount - 1) {   //  If at the bottom bound
                     randPoint = utils.getRandomPointOnRect(p4, p3, p3, p4);
                 }
                 else {
@@ -118,11 +130,19 @@ PolygonalMode.prototype._generatePrimitives = function() {
             }
             graph.insert(i, j, randPoint);
 
+            //----------------------------------------
+            //  Move the current small grid to the
+            //  right by one interval unit
+            //----------------------------------------
             p1.x += widthInterval;
             p2.x += widthInterval;
             p3.x += widthInterval;
             p4.x += widthInterval;
         }
+        //----------------------------------------
+        //  Move the current small grid back to the
+        //  left most bound and move it down by one interval unit
+        //----------------------------------------
         p1.x = p4.x = 0;
         p2.x = p3.x = widthInterval;
         p1.y += heightInterval;
@@ -131,19 +151,25 @@ PolygonalMode.prototype._generatePrimitives = function() {
         p4.y += heightInterval;
     }
 
-    //  Connect all adjacent vertices
-    //  and get all primitives
+    //---------------------------------------
+    //  As we are going to check adjacent vertices
+    //  it's easier to store all delta index values and
+    //  loop over them
+    //---------------------------------------
     var di = [-1, -1, -1,  0,  1, 1, 1, 0],
         dj = [-1,  0,  1,  1,  1, 0, -1, -1];
-    var visited = new Graph(rowCount, colCount);
 
+    //-------------------------------------
+    //  Connect all adjacent vertices
+    //  and get all primitives
+    //-------------------------------------
     for (let i = 0; i < rowCount; i++) {
         for (let j = 0; j < colCount; j++) {
             let cnt = 0;
-            let firstPoint, lastPoint;
+            let firstPoint, prevPoint;
             for (let k = 0; k < di.length; k++) {
                 let currPoint = graph.get(i + di[k], j + dj[k]);
-                if (currPoint && visited.get(i + di[k], j + dj[k]) === 0) {
+                if (currPoint) {
                     graph.connect(i, j, i + di[k], j + dj[k]);
                     cnt++;
 
@@ -153,19 +179,19 @@ PolygonalMode.prototype._generatePrimitives = function() {
                     else {
                         this._primitives.push(new utils.Polygon([
                             graph.get(i, j),
-                            lastPoint,
+                            prevPoint,
                             currPoint
                         ]));
                     }
-                    lastPoint = currPoint;
+                    prevPoint = currPoint;
                 }
             }
             if (firstPoint !== undefined &&
-                lastPoint !== undefined &&
+                prevPoint !== undefined &&
                 !firstPoint.equal(lastPoint)) {
                 this._primitives.push(new utils.Polygon([
                     graph.get(i, j),
-                    lastPoint,
+                    prevPoint,
                     firstPoint
                 ]));
             }
