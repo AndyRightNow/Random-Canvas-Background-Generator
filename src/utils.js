@@ -1,4 +1,25 @@
+/*jshint esversion: 6 */
 var Vector = require('./vector');
+
+/*
+ * Check if two arrays have the same elements
+ *
+ * @return {Boolean} true of false
+ * @param {Array} An array to compare with
+ */
+Array.prototype.sameElements = function(arr) {
+    if (arr === undefined ||
+        !Array.isArray(arr) ||
+        arr.length !== this.length) return false;
+
+    for (let i = 0; i < this.length; i++) {
+        if (arr.indexOf(this[i]) === -1 ||
+            this.indexOf(arr[i]) === -1) {
+                return false;
+        }
+    }
+    return true;
+};
 
 /*
  *	Polygon class
@@ -13,6 +34,10 @@ Polygon.prototype = {
 
     set points(points) {
         this._points = points;
+    },
+
+    equal: function(polygon) {
+        return this.points.sameElements(polygon.points);
     }
 };
 

@@ -2,6 +2,23 @@
 var utils = require('./../src/utils');
 var Vector = require('./../src/vector');
 
+describe('sameElements', function(){
+    it('is a function to check if two arrays have the same elements but do not necessarily have to be in the same order', function(){
+        var arr1 = [1, 2, 3, 4, 5],
+            arr2 = [5, 4, 3, 2, 1],
+            arr3 = [],
+            arr4 = "",
+            arr5 = [1, 1, 1, 1, 2];
+
+        expect(arr1.sameElements(arr2)).toBe(true);
+        expect(arr1.sameElements(arr5)).toBe(false);
+        expect(arr1.sameElements(arr3)).toBe(false);
+        expect(arr1.sameElements(arr4)).toBe(false);
+        expect(arr3.sameElements(arr3)).toBe(true);
+        expect(arr2.sameElements(arr2)).toBe(true);
+    });
+});
+
 describe('Polygon', function(){
     it('is a polygon with points to specify its shape and position', function(){
         var poly1 = new utils.Polygon([
