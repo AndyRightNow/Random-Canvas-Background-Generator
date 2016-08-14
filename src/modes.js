@@ -188,7 +188,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
             }
             if (firstPoint !== undefined &&
                 prevPoint !== undefined &&
-                !firstPoint.equal(lastPoint)) {
+                !firstPoint.equal(prevPoint)) {
                 this._primitives.push(new utils.Polygon([
                     graph.get(i, j),
                     prevPoint,
