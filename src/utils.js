@@ -41,7 +41,7 @@ Polygon.prototype = {
 function shrinkRect(p1, p2, p3, p4, byDx, byDy) {
     byDx = byDx || 0;
     byDy = byDy || 0;
-    
+
     return {
         'p1': p1.clone().add(new Vector(byDx, byDy)),
         'p2': p2.clone().add(new Vector(-byDx, byDy)),
@@ -141,10 +141,12 @@ function getRandomPointOnLine(p1, p2) {
  }
 
 //  Exports
-module.exports.Polygon = Polygon;
-module.exports.clamp = clamp;
-module.exports.getRandomNumberFromRange = getRandomNumberFromRange;
-module.exports.getRandomPointOnRect = getRandomPointOnRect;
-module.exports.getRandomPointOnLine = getRandomPointOnLine;
-module.exports.inherit = inherit;
-module.exports.shrinkRect = shrinkRect;
+module.exports = {
+    Polygon: Polygon,
+    clamp: clamp,
+    getRandomNumberFromRange: getRandomNumberFromRange,
+    getRandomPointOnRect: getRandomPointOnRect,
+    getRandomPointOnLine: getRandomPointOnLine,
+    inherit: inherit,
+    shrinkRect: shrinkRect
+};
