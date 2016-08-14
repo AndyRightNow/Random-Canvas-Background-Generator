@@ -2,23 +2,6 @@
 var utils = require('./../src/utils');
 var Vector = require('./../src/vector');
 
-describe('sameElements', function(){
-    it('is a function to check if two arrays have the same elements but do not necessarily have to be in the same order', function(){
-        var arr1 = [1, 2, 3, 4, 5],
-            arr2 = [5, 4, 3, 2, 1],
-            arr3 = [],
-            arr4 = "",
-            arr5 = [1, 1, 1, 1, 2];
-
-        expect(arr1.sameElements(arr2)).toBe(true);
-        expect(arr1.sameElements(arr5)).toBe(false);
-        expect(arr1.sameElements(arr3)).toBe(false);
-        expect(arr1.sameElements(arr4)).toBe(false);
-        expect(arr3.sameElements(arr3)).toBe(true);
-        expect(arr2.sameElements(arr2)).toBe(true);
-    });
-});
-
 describe('Polygon', function(){
     it('is a polygon with points to specify its shape and position', function(){
         var poly1 = new utils.Polygon([
@@ -46,6 +29,30 @@ describe('Polygon', function(){
         expect(poly1.points[4].y).toEqual(63);
         expect(poly1.points[5].x).toEqual(62);
         expect(poly1.points[5].y).toEqual(43);
+    });
+});
+
+describe('Polygon.equal', function(){
+    it('is a function to compare to polygons', function(){
+        var poly1 = new utils.Polygon([
+                new Vector(10, 12),
+                new Vector(22, 23),
+                new Vector(32, 23),
+                new Vector(42, 73),
+                new Vector(52, 63),
+                new Vector(62, 43)]),
+            poly2 = new utils.Polygon([
+                new Vector(10, 12),
+                new Vector(22, 23),
+                new Vector(32, 23),
+                new Vector(42, 73),
+                new Vector(52, 63),
+                new Vector(62, 43)]),
+            poly3 = new utils.Polygon(poly1.points);
+            poly3.points.reverse();
+        expect(poly1.equal(poly2)).toBe(true);
+        expect(poly1.equal(poly3)).toBe(true);
+        expect(poly2.equal(poly3)).toBe(true);
     });
 });
 

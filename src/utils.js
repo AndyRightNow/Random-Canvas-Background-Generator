@@ -2,27 +2,9 @@
 var Vector = require('./vector');
 
 /*
- * Check if two arrays have the same elements
+ *	Polygon class constructor
  *
- * @return {Boolean} true of false
- * @param {Array} An array to compare with
- */
-Array.prototype.sameElements = function(arr) {
-    if (arr === undefined ||
-        !Array.isArray(arr) ||
-        arr.length !== this.length) return false;
-
-    for (let i = 0; i < this.length; i++) {
-        if (arr.indexOf(this[i]) === -1 ||
-            this.indexOf(arr[i]) === -1) {
-                return false;
-        }
-    }
-    return true;
-};
-
-/*
- *	Polygon class
+ * @param {Array} points: The points of the polygon. They must be in clockwise or counter-clockwise order
  */
 function Polygon(points) {
     this._points = points || [];
@@ -37,7 +19,14 @@ Polygon.prototype = {
     },
 
     equal: function(polygon) {
-        return this.points.sameElements(polygon.points);
+        var reversed = polygon.points;
+        reversed.reverse();
+        
+        return this.points.every(function(element, index) {
+            return element.equal(polygon.points[index]);
+        }) || this.points.every(function(element, index) {
+            return element.equal(reversed[index]);
+        });
     }
 };
 

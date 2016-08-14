@@ -12,6 +12,10 @@ function Vector(x, y){
 	this.y = y || 0;
 }
 
+Vector.prototype.equal = function(vec) {
+	return this.x === vec.x && this.y === vec.y;
+};
+
 Vector.prototype.dot = function(v){
 	return this.x * v.x + this.y * v.y;
 };

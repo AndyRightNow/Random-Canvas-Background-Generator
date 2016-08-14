@@ -59,13 +59,15 @@ function PolygonalMode(density, canvasWidth, canvasHeight, baseColors) {
 }
 utils.inherit(PolygonalMode, Mode);
 
+PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.5;
+
 /*
  * Private helper function - generate points to draw with
  *
  * @return none
  */
 PolygonalMode.prototype._generatePoints = function() {
-
+    
 
 };
 
