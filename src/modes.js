@@ -94,14 +94,14 @@ PolygonalMode.prototype.DENSITY_RATO_DIF =
  *
  */
 PolygonalMode.prototype.setDensity = function(density) {
-    this._density = density;
+    this._density = 1 - density;
 };
 /*
  * Public member function - return the density of polygons
  *
  * @return {float} density
  */
-PolygonalMode.prototype.setDensity = function() {
+PolygonalMode.prototype.getDensity = function() {
     return this._density;
 };
 

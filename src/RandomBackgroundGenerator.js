@@ -49,6 +49,11 @@ function RandomBackgroundGenerator(canvasId, mode, baseColors) {
 	}
 }
 
+/*
+ * Public member function - return the current mode
+ *
+ * @return {Mode} the current mode
+ */
 RandomBackgroundGenerator.prototype.getMode = function() {
 	return this._mode;
 };
@@ -140,6 +145,9 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 	this._canvasContext.restore();
 };
 
+/*
+ * Public member function - clear the canvas and generate a background with the mode
+ */
 RandomBackgroundGenerator.prototype.generate = function(){
 	this._canvasContext.clearRect(0, 0, this._canvas.clientWidth, this._canvas.clientHeight);
 
