@@ -111,21 +111,21 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 			//	Get random linear gradient colors
 			//	and add colors
 			//------------------------------------
-			let randomIntensity = Math.random() + 1 * 0.5;
-			let gradColors = colorUtils.randomGradient(colorUtils.randomColor(color), randomIntensity);
+			let gradColors = colorUtils.randomGradient(colorUtils.randomColor(color,
+				utils.getRandomNumberFromRange(0, 0.3)),	//	Intensity of the base color
+					utils.getRandomNumberFromRange(0, 0.1));	//	Intensity of the random gradient
 			grad.addColorStop(0, gradColors.first);
 			grad.addColorStop(1, gradColors.second);
 
 			this._canvasContext.fillStyle = grad;
 		}
 		else {
-			this._canvasContext.fillStyle = color;
+			this._canvasContext.fillStyle = colorUtils.randomColor(color);
 		}
 	}
 	else {
-		this._canvasContext.fillStyle = color;
+		this._canvasContext.fillStyle = colorUtils.randomColor(color);
 	}
-
 	//-----------------------------------
 	//	Draw the polygon
 	//-----------------------------------

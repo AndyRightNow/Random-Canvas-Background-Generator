@@ -96,8 +96,8 @@ function adjustColorBrightness(color, percentage) {
 
      //	Used to get a either negative or positive random number
      var randomArr = [
-         utils.getRandomNumberFromRange(rangeLower, rangeUpper, false),
-         utils.getRandomNumberFromRange(-rangeLower, -rangeUpper, false)];
+         utils.getRandomNumberFromRange(rangeLower, rangeUpper - threshold, false), //  Darken
+         utils.getRandomNumberFromRange(-rangeUpper, -rangeLower, false)];  //  Brighten
 
      //	Color validity checking in adjustColorBrightness
      return adjustColorBrightness(baseColor, randomArr[utils.getRandomNumberFromRange(0, 2)]);
