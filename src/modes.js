@@ -102,7 +102,7 @@ PolygonalMode.prototype.setDensity = function(density) {
  * @return {float} density
  */
 PolygonalMode.prototype.getDensity = function() {
-    return this._density;
+    return 1 - this._density;
 };
 
 /*
@@ -113,6 +113,9 @@ PolygonalMode.prototype.getDensity = function() {
  * @return none
  */
 PolygonalMode.prototype._generatePrimitives = function() {
+    //  Clear previous data
+    this._primitives = [];
+
     //-----------------------------------------
     //  Width and height of every small grid
     //-----------------------------------------
@@ -146,7 +149,10 @@ PolygonalMode.prototype._generatePrimitives = function() {
             var randPoint;
 
             if (j === 0) {  //  If at the left bound
-                randPoint = utils.getRandomPointOnRect(p1, p1, p4, p4);
+                if (i === 0)
+                    randPoint = new Vector(i * widthInterval, j * heightInterval);
+                else
+                    randPoint = utils.getRandomPointOnRect(p1, p1, p4, p4);
             }
             else if (j === colCount - 1) {   //  If at the right bound
                 randPoint = utils.getRandomPointOnRect(p2, p2, p3, p3);
