@@ -33,5 +33,9 @@ describe('PolygonalMode.prototype._generatePrimitives', function(){
     it('is a function used to generate primitives for drawing', function(){
         var polyMode = new Modes.Polygonal(0.7, 500, 500, "#000000", "#FFFFFF");
         polyMode.generate();
+
+        // for (let i = 0; i < polyMode.getPrimitives().length; i++) {
+        //     console.log(polyMode.getPrimitives()[i]);
+        // }
     });
 });

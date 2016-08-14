@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 /*
  * Undirected acylic graph data structure using
  * adjaceny matrix as implementation
@@ -9,14 +11,17 @@
  *
  * @param {Integer} rowCount: The number of rows
  * @param {Integer} columnCount: The number of columns
- * @oaram {Any} initialValue(Optional): initialValue for all elements in the graph. It's 0 by default.
+ * @oaram {Non-object types} initialValue(Optional): initialValue for all elements in the graph. It's 0 by default.
  */
 function Graph(rowCount, columnCount, initialValue) {
     this._rowCount = rowCount || 0;
     this._columnCount = columnCount || 0;
 
     //  Allocate an empty matrix
-    this._data = new Array(rowCount).fill(new Array(columnCount).fill(initialValue || 0, 0), 0);
+    this._data = new Array(rowCount);
+    for (let i = 0; i < rowCount; i++) {
+        this._data[i] = new Array(columnCount).fill(initialValue || 0, 0);
+    }
 
     this._edges = {};
 }

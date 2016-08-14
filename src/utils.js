@@ -71,15 +71,17 @@ function clamp(x, lower, upper){
  *	@param {Vector} p1, p2, p3, p4: Points of a rectangle starting
  *								   from the top left corner and going
  *								   clockwise.
+ *	@param {boolean} isInt: The flag to specify whether the result is int or float
  */
-function getRandomPointOnRect(p1, p2, p3, p4) {
+function getRandomPointOnRect(p1, p2, p3, p4, isInt) {
+    isInt = isInt || true;
     var width = Math.abs(p2.x - p1.x),
         height = Math.abs(p3.y - p2.y),
         topLeftX = Math.min(p1.x, p2.x, p3.x, p4.x),
         topLeftY = Math.min(p1.y, p2.y, p3.y, p4.y);
 
-    var randomDeltaX = getRandomNumberFromRange(0, width, false),
-        randomDeltaY = getRandomNumberFromRange(0, height, false);
+    var randomDeltaX = getRandomNumberFromRange(0, width, isInt),
+        randomDeltaY = getRandomNumberFromRange(0, height, isInt);
 
     return new Vector(topLeftX + randomDeltaX, topLeftY + randomDeltaY);
 }

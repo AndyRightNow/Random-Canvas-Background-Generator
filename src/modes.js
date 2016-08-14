@@ -81,13 +81,10 @@ PolygonalMode.prototype._generatePrimitives = function() {
     var ratio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._density;
     var widthInterval =  ratio * this._width,
         heightInterval = ratio * this._height;
-    t.LOG('density', this._density);
-    t.LOG('widthInterval', widthInterval, 'heightInterval', heightInterval);
 
     //  Counts of rows and columns plus the top and left bounds of the rectangle
     var rowCount = Math.floor(this._width / widthInterval) + 1,
         colCount = Math.floor(this._height / heightInterval) + 1;
-    t.LOG('rowCount', rowCount, 'colCount', colCount);
 
     var graph = new Graph(rowCount, colCount);
 
@@ -96,7 +93,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
         p2 = new Vector(widthInterval, 0),
         p3 = new Vector(widthInterval, heightInterval),
         p4 = new Vector(0, heightInterval);
-    t.LOG('p1', p1, 'p2', p2, 'p3', p3, 'p4', p4);
+    //t\.LOG\(.*\)\;
 
     //  Randomly generate points on the canvas
     for (let i = 0; i < rowCount; i++) {
@@ -148,7 +145,6 @@ PolygonalMode.prototype._generatePrimitives = function() {
                 let currPoint = graph.get(i + di[k], j + dj[k]);
                 if (currPoint && visited.get(i + di[k], j + dj[k]) === 0) {
                     graph.connect(i, j, i + di[k], j + dj[k]);
-                    lastPoint = currPoint;
                     cnt++;
 
                     if (cnt === 1) {
@@ -157,10 +153,11 @@ PolygonalMode.prototype._generatePrimitives = function() {
                     else {
                         this._primitives.push(new utils.Polygon([
                             graph.get(i, j),
-                            graph.get(i + di[k - 1], j + dj[k - 1]),
+                            lastPoint,
                             currPoint
                         ]));
                     }
+                    lastPoint = currPoint;
                 }
             }
             if (firstPoint !== undefined &&
