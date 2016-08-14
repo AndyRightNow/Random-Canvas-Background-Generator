@@ -27,6 +27,7 @@ Maybe because it looks quite pretty and is simple to use?
     ```
     1) The first line of code means setting the density of the polygons on the screen.
     2) The second line of code means setting the mix mode of the color to false, which means no mixing and displaying the color one by one.
+
 4. Generate!
     ```javascript
     backgroundGen.generate();
