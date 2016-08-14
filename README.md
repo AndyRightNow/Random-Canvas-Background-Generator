@@ -4,7 +4,7 @@ A JavaScript plugin to generate random background for HTML canvas in a certain m
 
 ## What is this?
 
-It's a simple plugin to drop into your HTML **without installation and dependencies**. What it does is that it randomly generate a background on HTML canvas element you provide and the visual effect is pretty decent, I think. :)
+It's a simple plugin to drop into your HTML **without installation and dependencies**. What it does is that it randomly generates a background on the HTML canvas element you provide and BTW, the visual effect is pretty decent, I think. :)
 
 ## Why This?
 
@@ -29,7 +29,7 @@ Maybe because it looks quite pretty and is simple to use?
     backgroundGen.getMode().setMixed(false);
     ```
     1) The first line of code means setting the density of the polygons on the screen.
-    2) The second line of code means setting the mix mode of the color to false, which means no mixing and displaying the color one by one.
+    2) The second line of code means setting the mix mode of the color to false, which means no mixing and it will display the color one by one.
 
 4. Generate!
     ```javascript
