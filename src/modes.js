@@ -148,24 +148,27 @@ PolygonalMode.prototype._generatePrimitives = function() {
         for (let j = 0; j < colCount; j++) {
             var randPoint;
 
+            //  Shrink the rectangle to produce less messy points
+            var shrinked = utils.shrinkRect(p1, p2, p3, p4, widthInterval / 5 , 0);
+
             if (j === 0) {  //  If at the left bound
                 if (i === 0)
                     randPoint = new Vector(i * widthInterval, j * heightInterval);
                 else
-                    randPoint = utils.getRandomPointOnRect(p1, p1, p4, p4);
+                    randPoint = utils.getRandomPointOnRect(shrinked.p1, shrinked.p1, shrinked.p4, shrinked.p4);
             }
             else if (j === colCount - 1) {   //  If at the right bound
-                randPoint = utils.getRandomPointOnRect(p2, p2, p3, p3);
+                randPoint = utils.getRandomPointOnRect(shrinked.p2, shrinked.p2, shrinked.p3, shrinked.p3);
             }
             else {
                 if (i === 0) {   //  If at the top bound
-                    randPoint = utils.getRandomPointOnRect(p1, p2, p2, p1);
+                    randPoint = utils.getRandomPointOnRect(shrinked.p1, shrinked.p2, shrinked.p2, shrinked.p1);
                 }
                 else if (i === rowCount - 1) {   //  If at the bottom bound
-                    randPoint = utils.getRandomPointOnRect(p4, p3, p3, p4);
+                    randPoint = utils.getRandomPointOnRect(shrinked.p4, shrinked.p3, shrinked.p3, shrinked.p4);
                 }
                 else {
-                    randPoint = utils.getRandomPointOnRect(p1, p2, p3, p4);
+                    randPoint = utils.getRandomPointOnRect(shrinked.p1, shrinked.p2, shrinked.p3, shrinked.p4);
                 }
             }
             graph.insert(i, j, randPoint);

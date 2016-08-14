@@ -34,10 +34,20 @@ Vector.prototype.scale = function(sx, sy){
 	return this;
 };
 
+Vector.prototype.add = function(v) {
+	this.x += v.x;
+	this.y += v.y;
+	return this;
+};
+
 Vector.prototype.sub = function(v){
 	this.x -= v.x;
 	this.y -= v.y;
 	return this;
+};
+
+Vector.prototype.clone = function() {
+	return new Vector(this.x, this.y);
 };
 
 //-------------------------------

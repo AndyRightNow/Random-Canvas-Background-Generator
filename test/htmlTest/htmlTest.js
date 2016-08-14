@@ -6,8 +6,8 @@ var RandomBackgroundGenerator = require('./../../src/RandomBackgroundGenerator')
 var htmlTest = {};
 
 htmlTest.run = function(canvasId){
-    var back = new RandomBackgroundGenerator('canvas', 'Polygonal', '#87D37C', '#90C695', '#4183D7');
-    back.getMode().setDensity(0.8);
+    var back = new RandomBackgroundGenerator('canvas', 'Polygonal','#4183D7');
+    back.getMode().setDensity(0.5);
     document.getElementById('generate').addEventListener('click', function(){
         back.generate();
     });

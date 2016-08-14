@@ -31,6 +31,26 @@ Polygon.prototype = {
 };
 
 /*
+ * Shrink a rectangle by value dx and value dy
+ *
+ * @return {Object} an object consisting of transformed p1, p2, p3, p4
+ * @param {Vector} p1, p2, p3, p4: Points of a rectangle starting
+ *								   from the top left corner and going
+ *								   clockwise.
+ */
+function shrinkRect(p1, p2, p3, p4, byDx, byDy) {
+    byDx = byDx || 0;
+    byDy = byDy || 0;
+    
+    return {
+        'p1': p1.clone().add(new Vector(byDx, byDy)),
+        'p2': p2.clone().add(new Vector(-byDx, byDy)),
+        'p3': p3.clone().add(new Vector(-byDx, -byDy)),
+        'p4': p4.clone().add(new Vector(-byDx, byDy))
+    };
+}
+
+/*
  *  Clamp a number within a range
  */
 function clamp(x, lower, upper){
@@ -127,3 +147,4 @@ module.exports.getRandomNumberFromRange = getRandomNumberFromRange;
 module.exports.getRandomPointOnRect = getRandomPointOnRect;
 module.exports.getRandomPointOnLine = getRandomPointOnLine;
 module.exports.inherit = inherit;
+module.exports.shrinkRect = shrinkRect;
