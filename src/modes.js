@@ -66,9 +66,9 @@ Mode.prototype.getPrimitives = function() {
  *                                   as the base colors of the background
  * @param {Number} canvasWidth: The width of the canvas
  * @param {Number} canvasHeight: The height of the canvas
-
+ * @param {Boolean} isMixed: A flag indicating if all colors are mixed or displayed one by one
  */
-function PolygonalMode(density, canvasWidth, canvasHeight, baseColors) {
+function PolygonalMode(density, canvasWidth, canvasHeight, isMixed, baseColors) {
     //  Call the base constructor and init base class members
     PolygonalMode._super.apply(this, Array.from(arguments).slice(1, arguments.length));
 
@@ -77,6 +77,7 @@ function PolygonalMode(density, canvasWidth, canvasHeight, baseColors) {
     //----------------------------
     this._density = density || 0.5;
     this._density = 1 - this._density;
+	this._isMixed = isMixed || false;
 }
 utils.inherit(PolygonalMode, Mode);
 
@@ -88,6 +89,32 @@ PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND = 0.01;
 PolygonalMode.prototype.DENSITY_RATO_DIF =
     PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND -
     PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND;
+
+/*
+ * Public member function - set the mix mode
+ *
+ */
+PolygonalMode.prototype.setMixed = function(flag) {
+	this._isMixed = flag;
+};
+
+/*
+ * Public member function - return the mix mode
+ *
+ * @return {Mode} the current mix mode
+ */
+PolygonalMode.prototype.isMixed = function() {
+	return this._isMixed;
+};
+
+/*
+ * Public override virtual function - return an array of color strings based on the mix mode
+ *
+ * @return {Array} An array of color strings
+ */
+Mode.prototype.getBaseColors = function() {
+    return this._isMixed ? this._baseColors : [this._baseColors[utils.getRandomNumberFromRange(0, this._baseColors.length)]];
+};
 
 /*
  * Public member function - set the density of polygons
@@ -152,7 +179,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
             var shrinked = utils.shrinkRect(p1, p2, p3, p4, widthInterval / 5 , 0);
 
             if (j === 0) {  //  If at the left bound
-                if (i === 0)
+                if (i === 0)    //  If at the top left corner
                     randPoint = new Vector(i * widthInterval, j * heightInterval);
                 else
                     randPoint = utils.getRandomPointOnRect(shrinked.p1, shrinked.p1, shrinked.p4, shrinked.p4);

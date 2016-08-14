@@ -40,11 +40,11 @@ function RandomBackgroundGenerator(canvasId, mode, baseColors) {
 
 	if (this._canvas) {	//	If canvas element exists
 		this._mode = new Modes[this._modeName](0.6,
-			this._canvas.clientWidth,
-			this._canvas.clientHeight);
+			this._canvas.clientWidth + this._canvas.clientWidth / 5,
+			this._canvas.clientHeight + this._canvas.clientHeight / 5);
 
 		if (arguments.length > 2) {	//	If any color is proviede
-			this._mode.setBaseColors.apply(this._mode, Array.from(arguments).slice(2, arguments.length));
+			this._mode.setBaseColors.apply(this._mode, Array.from(arguments).slice(3, arguments.length));
 		}
 	}
 }
@@ -57,7 +57,6 @@ function RandomBackgroundGenerator(canvasId, mode, baseColors) {
 RandomBackgroundGenerator.prototype.getMode = function() {
 	return this._mode;
 };
-
 
 /*
  * Private helper function used to draw polygon on the canvas
