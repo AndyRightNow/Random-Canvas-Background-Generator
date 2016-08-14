@@ -6,5 +6,8 @@ module.exports = {
         console.log('--------------------------------------');
         console.log.apply(console, arguments);
         console.log('--------------------------------------');
+    },
+    LOG: function() {
+        return console.log.apply(console, arguments);
     }
 };

@@ -11,6 +11,8 @@
  //-----------------------------
  var utils = require('./utils');
  var Graph = require('./graph');
+ var Vector = require('./vector');
+ var t = require('./../test/test');
 
 /*
  * Base mode class constructor
@@ -57,12 +59,17 @@ function PolygonalMode(density, canvasWidth, canvasHeight, baseColors) {
     //----------------------------
     //  Class-specific members
     //----------------------------
-    this._density = density || 0.3;
+    this._density = density || 0.5;
+    this._density = 1 - this._density;
 }
 utils.inherit(PolygonalMode, Mode);
 
-//  The upper bound of ratio
+//  The bounds of ratio
 PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.5;
+PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND = 0.005;
+PolygonalMode.prototype.DENSITY_RATO_DIF =
+    PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND -
+    PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND;
 
 /*
  * Private helper function - generate points to draw with
@@ -71,12 +78,16 @@ PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.5;
  */
 PolygonalMode.prototype._generatePrimitives = function() {
     //  Width and height of every small grid
-    var widthInterval = this.DENSITY_RATO_UPPER_BOUND * this._density * this._width,
-        heightInterval = this.DENSITY_RATO_UPPER_BOUND * this._density * this._height;
+    var ratio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._density;
+    var widthInterval =  ratio * this._width,
+        heightInterval = ratio * this._height;
+    t.LOG('density', this._density);
+    t.LOG('widthInterval', widthInterval, 'heightInterval', heightInterval);
 
     //  Counts of rows and columns plus the top and left bounds of the rectangle
     var rowCount = Math.floor(this._width / widthInterval) + 1,
         colCount = Math.floor(this._height / heightInterval) + 1;
+    t.LOG('rowCount', rowCount, 'colCount', colCount);
 
     var graph = new Graph(rowCount, colCount);
 
@@ -85,6 +96,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
         p2 = new Vector(widthInterval, 0),
         p3 = new Vector(widthInterval, heightInterval),
         p4 = new Vector(0, heightInterval);
+    t.LOG('p1', p1, 'p2', p2, 'p3', p3, 'p4', p4);
 
     //  Randomly generate points on the canvas
     for (let i = 0; i < rowCount; i++) {
@@ -123,12 +135,49 @@ PolygonalMode.prototype._generatePrimitives = function() {
     }
 
     //  Connect all adjacent vertices
+    //  and get all primitives
+    var di = [-1, -1, -1,  0,  1, 1, 1, 0],
+        dj = [-1,  0,  1,  1,  1, 0, -1, -1];
     var visited = new Graph(rowCount, colCount);
+
     for (let i = 0; i < rowCount; i++) {
         for (let j = 0; j < colCount; j++) {
+            let cnt = 0;
+            let firstPoint, lastPoint;
+            for (let k = 0; k < di.length; k++) {
+                let currPoint = graph.get(i + di[k], j + dj[k]);
+                if (currPoint && visited.get(i + di[k], j + dj[k]) === 0) {
+                    graph.connect(i, j, i + di[k], j + dj[k]);
+                    lastPoint = currPoint;
+                    cnt++;
 
+                    if (cnt === 1) {
+                        firstPoint = currPoint;
+                    }
+                    else {
+                        this._primitives.push(new utils.Polygon([
+                            graph.get(i, j),
+                            graph.get(i + di[k - 1], j + dj[k - 1]),
+                            currPoint
+                        ]));
+                    }
+                }
+            }
+            if (firstPoint !== undefined &&
+                lastPoint !== undefined &&
+                !firstPoint.equal(lastPoint)) {
+                this._primitives.push(new utils.Polygon([
+                    graph.get(i, j),
+                    lastPoint,
+                    firstPoint
+                ]));
+            }
         }
     }
+};
+
+PolygonalMode.prototype.generate = function() {
+    this._generatePrimitives();
 };
 
 //  Export an object for direct lookup

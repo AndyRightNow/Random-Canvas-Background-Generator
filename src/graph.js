@@ -9,7 +9,7 @@
  *
  * @param {Integer} rowCount: The number of rows
  * @param {Integer} columnCount: The number of columns
- * @oaram {Any} initialValue(Optional): initialValue for all elements in the graph
+ * @oaram {Any} initialValue(Optional): initialValue for all elements in the graph. It's 0 by default.
  */
 function Graph(rowCount, columnCount, initialValue) {
     this._rowCount = rowCount || 0;
@@ -24,6 +24,7 @@ function Graph(rowCount, columnCount, initialValue) {
 /*
  * Private member function - check if a pair of positions is in the range of rows and columns
  *
+ * @return {Boolean} true if the pair of positions is in the bound and false if not
  * @param {Integer} i: The zero-based row position
  * @param {Integer} j: The zero-based column position
  */
@@ -37,6 +38,7 @@ Graph.prototype._checkBound = function(i, j) {
 /*
  * Private member function - get an id from a pair of positions
  *
+ * @return {String} The id of the pair of positions
  * @param {Integer} i: The zero-based row position
  * @param {Integer} j: The zero-based column position
  */
@@ -76,6 +78,8 @@ Graph.prototype.insert = function(i, j, value) {
 /*
  * Public member function - get a element from a pair of position
  *
+ * @return {Any / null} The element at the position if the pair of positions is in the bound
+ *                      and null if not
  * @param {Integer} i: The zero-based row position
  * @param {Integer} j: The zero-based column position
  */
@@ -89,6 +93,7 @@ Graph.prototype.get = function(i, j) {
 /*
  * Public member function - check if two vertices are connected
  *
+ * @return {Boolean} true if there is a connection between two elements
  * @param {Integer} i1, i2: The zero-based row position
  * @param {Integer} j1, j2: The zero-based column position
  */
@@ -108,6 +113,7 @@ Graph.prototype.isConnected = function(i1, j1, i2, j2) {
 /*
  * Public member function - connect the edge of two vertices
  *
+ * @return {Boolean} true if the action is successful
  * @param {Integer} i1, i2: The zero-based row position
  * @param {Integer} j1, j2: The zero-based column position
  */
@@ -129,6 +135,7 @@ Graph.prototype.connect = function(i1, j1, i2, j2) {
 /*
  * Public member function - disconnect the edge of two vertices
  *
+ * @return {Boolean} true if the action is successful
  * @param {Integer} i1, i2: The zero-based row position
  * @param {Integer} j1, j2: The zero-based column position
  */
