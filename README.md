@@ -20,7 +20,9 @@ Maybe because it looks quite pretty and is simple to use?
         '#AEA8D3', '#663399', '#BE90D4', '#E4F1FE');
     ```
     1) First parameter 'canvas': It's the id of the HTML Canvas element you want to generate on.
+    
     2) Second parameter 'Polygonal': It's the mode the generator will use to generate the background.
+    
     3) Third to the last parameters: Colors you want the background to have
 
 3. Set the detailed parameters of the mode.
