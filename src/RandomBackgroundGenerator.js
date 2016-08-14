@@ -15,6 +15,7 @@
 var utils = require('./utils');
 var colorUtils = require('./colorUtils');
 var Vector = require('./vector');
+var Modes = require('./modes');
 
 /*
 *	Constant string name
@@ -27,13 +28,31 @@ const POLYGONAL = "Polygonal";
 * @param {string} canvasId: The id of the canvas you want to generate background on
 * @param {string} mode: The pattern in which the background is generated.
 *						 Currently Support: 1. "Polygonal"
+* @param {String(Args)} baseColors: a set of variable number of color strings used
+*                                   as the base colors of the background
 */
-function RandomBackgroundGenerator(canvasId, mode) {
+function RandomBackgroundGenerator(canvasId, mode, baseColors) {
 	//	Initialize
-	this._mode = mode || POLYGONAL;
 	this._canvas = typeof document !== 'undefined' ? document.getElementById(canvasId) : null;
 	this._canvasContext = this._canvas ? this._canvas.getContext('2d') : null;
+	this._modeName = mode || POLYGONAL;
+	this._mode = null;
+
+	if (this._canvas) {	//	If canvas element exists
+		this._mode = new Modes[this._modeName](0.6,
+			this._canvas.clientWidth,
+			this._canvas.clientHeight);
+
+		if (arguments.length > 2) {	//	If any color is proviede
+			this._mode.setBaseColors.apply(this._mode, Array.from(arguments).slice(2, arguments.length));
+		}
+	}
 }
+
+RandomBackgroundGenerator.prototype.getMode = function() {
+	return this._mode;
+};
+
 
 /*
  * Private helper function used to draw polygon on the canvas
@@ -122,14 +141,17 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, grad
 };
 
 RandomBackgroundGenerator.prototype.generate = function(){
-	//	Clear the canvas
+	this._canvasContext.clearRect(0, 0, this._canvas.clientWidth, this._canvas.clientHeight);
 
-	//	Draw the background
-		//	Generate points on the canvas
+	this._mode.generate();
 
-		//	Connect all adjacent points
+	var primitives = this._mode.getPrimitives();
+	var baseColors = this._mode.getBaseColors();
 
-		//	Fill the triangles formed by the points
+	for (let i = 0; i < primitives.length; i++) {
+		var randColor = baseColors[utils.getRandomNumberFromRange(0, baseColors.length)];
+		this._fillPolygon(randColor, primitives[i], true);
+	}
 };
 
 //	Exports

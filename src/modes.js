@@ -32,6 +32,23 @@ function Mode(canvasWidth, canvasHeight, baseColors) {
 }
 
 /*
+ * Public virtual function - set the array of color strings
+ *
+ */
+Mode.prototype.setBaseColors = function(args) {
+    this._baseColors = Array.from(arguments);
+};
+
+/*
+ * Public virtual function - return an array of color strings
+ *
+ * @return {Array} An array of color strings
+ */
+Mode.prototype.getBaseColors = function() {
+    return this._baseColors;
+};
+
+/*
  * Public virtual function - return an array of the primitive shapes to draw with
  *
  * @return {Array} An array of primitive shapes
@@ -63,12 +80,30 @@ function PolygonalMode(density, canvasWidth, canvasHeight, baseColors) {
 }
 utils.inherit(PolygonalMode, Mode);
 
+//----------------------
 //  The bounds of ratio
-PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.5;
-PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND = 0.005;
+//----------------------
+PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.3;
+PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND = 0.0001;
 PolygonalMode.prototype.DENSITY_RATO_DIF =
     PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND -
     PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND;
+
+/*
+ * Public member function - set the density of polygons
+ *
+ */
+PolygonalMode.prototype.setDensity = function(density) {
+    this._density = density;
+};
+/*
+ * Public member function - return the density of polygons
+ *
+ * @return {float} density
+ */
+PolygonalMode.prototype.setDensity = function() {
+    return this._density;
+};
 
 /*
  * Private helper function - generate points to draw with

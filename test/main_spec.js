@@ -12,13 +12,15 @@ describe('RandomBackgroundGenerator constructor', function(){
         expect(obj3).toEqual(jasmine.any(RandomBackgroundGenerator));
 
         expect(obj1._canvas).toBeNull();
-        expect(obj1._mode).toEqual('Polygonal');
+        expect(obj1._modeName).toEqual('Polygonal');
         expect(obj1._canvasContext).toBeNull();
+
         expect(obj2._canvas).toBeNull();
-        expect(obj2._mode).toEqual('Polygonal');
+        expect(obj2._modeName).toEqual('Polygonal');
         expect(obj2._canvasContext).toBeNull();
+
         expect(obj3._canvas).toBeNull();
-        expect(obj3._mode).toEqual('Polygonal');
+        expect(obj3._modeName).toEqual('Polygonal');
         expect(obj3._canvasContext).toBeNull();
     });
 });
