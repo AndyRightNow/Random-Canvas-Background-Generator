@@ -12,7 +12,6 @@
  var utils = require('./utils');
  var Graph = require('./graph');
  var Vector = require('./vector');
- var t = require('./../test/test');
 
 /*
  * Base mode class constructor
@@ -165,19 +164,23 @@ PolygonalMode.prototype._generatePrimitives = function() {
     //-------------------------------------
     for (let i = 0; i < rowCount; i++) {
         for (let j = 0; j < colCount; j++) {
+            //  Keep count of the points that are actually processed
             let cnt = 0;
+
             let firstPoint, prevPoint;
+
             for (let k = 0; k < di.length; k++) {
                 let currPoint = graph.get(i + di[k], j + dj[k]);
+
                 if (currPoint) {
                     graph.connect(i, j, i + di[k], j + dj[k]);
                     cnt++;
 
-                    if (cnt === 1) {
+                    if (cnt === 1) {    //  Assign first point
                         firstPoint = currPoint;
                     }
                     else {
-                        this._primitives.push(new utils.Polygon([
+                        this._primitives.push(new utils.Polygon([   //  Add polygon
                             graph.get(i, j),
                             prevPoint,
                             currPoint
@@ -186,6 +189,10 @@ PolygonalMode.prototype._generatePrimitives = function() {
                     prevPoint = currPoint;
                 }
             }
+            //-------------------------------------
+            //  Connect the first point with the
+            //  last point and add polygon
+            //-------------------------------------
             if (firstPoint !== undefined &&
                 prevPoint !== undefined &&
                 !firstPoint.equal(prevPoint)) {
@@ -197,6 +204,8 @@ PolygonalMode.prototype._generatePrimitives = function() {
             }
         }
     }
+
+
 };
 
 PolygonalMode.prototype.generate = function() {
