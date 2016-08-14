@@ -171,8 +171,8 @@ PolygonalMode.prototype._generatePrimitives = function() {
     //--------------------------------------------
     //  Randomly generate points on the canvas
     //--------------------------------------------
-    for (let i = 0; i < rowCount; i++) {
-        for (let j = 0; j < colCount; j++) {
+    for (var i = 0; i < rowCount; i++) {
+        for (var j = 0; j < colCount; j++) {
             var randPoint;
 
             //  Shrink the rectangle to produce less messy points
@@ -233,15 +233,15 @@ PolygonalMode.prototype._generatePrimitives = function() {
     //  Connect all adjacent vertices
     //  and get all primitives
     //-------------------------------------
-    for (let i = 0; i < rowCount; i++) {
-        for (let j = 0; j < colCount; j++) {
+    for (var i = 0; i < rowCount; i++) {
+        for (var j = 0; j < colCount; j++) {
             //  Keep count of the points that are actually processed
-            let cnt = 0;
+            var cnt = 0;
 
-            let firstPoint, prevPoint;
+            var firstPoint, prevPoint;
 
-            for (let k = 0; k < di.length; k++) {
-                let currPoint = graph.get(i + di[k], j + dj[k]);
+            for (var k = 0; k < di.length; k++) {
+                var currPoint = graph.get(i + di[k], j + dj[k]);
 
                 if (currPoint) {
                     graph.connect(i, j, i + di[k], j + dj[k]);

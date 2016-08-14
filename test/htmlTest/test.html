@@ -7,6 +7,13 @@
     <canvas id="canvas" width="1360" height="400" style="margin:auto;"></canvas>
     <button id="generate">Generate</button>
   </body>
-  <script src="htmlTest.dist.js"></script>
-  <script>htmlTest.run("canvas");</script>
+  <script src="../../dist/RandomBackgroundGenerator.min.js"></script>
+  <script>
+    var back = new RandomBackgroundGenerator('canvas', 'Polygonal','#AEA8D3', '#663399', '#BE90D4', '#E4F1FE');
+    back.getMode().setDensity(0.6);
+    back.getMode().setMixed(false);
+    document.getElementById('generate').addEventListener('click', function(){
+        back.generate();
+    });
+  </script>
 </html>

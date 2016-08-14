@@ -21,7 +21,7 @@ function Graph(rowCount, columnCount, initialValue) {
     //  Allocate an empty matrix
     //---------------------------
     this._data = new Array(rowCount);
-    for (let i = 0; i < rowCount; i++) {
+    for (var i = 0; i < rowCount; i++) {
         this._data[i] = new Array(columnCount).fill(initialValue || 0, 0);
     }
 
