@@ -41,7 +41,8 @@ Mode.prototype.getPrimitives = function() {
 /*
  * Polygonal mode class constructor
  *
- * @param {float} density: The density of the polygons, in the range of [0, 1]
+ * @param {float} density: The density of the polygons, in the range of [0, 1].
+ *                         0 is the sparsest and 1 is the densest.
  * @param {String(Args)} baseColors: a set of variable number of color strings used
  *                                   as the base colors of the background
  * @param {Number} canvasWidth: The width of the canvas
@@ -67,7 +68,12 @@ PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.5;
  * @return none
  */
 PolygonalMode.prototype._generatePoints = function() {
-    
+    var widthInterval = this.DENSITY_RATO_UPPER_BOUND * this._density * this._width,
+        heightInterval = this.DENSITY_RATO_UPPER_BOUND * this._density * this._height;
+
+    console.log(widthInterval, heightInterval);
+
+
 
 };
 

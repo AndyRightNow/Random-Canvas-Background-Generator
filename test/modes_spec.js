@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var Modes = require('./../src/modes');
 
 describe('PolygonalMode constructor', function(){
