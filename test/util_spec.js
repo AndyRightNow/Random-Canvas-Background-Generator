@@ -99,6 +99,8 @@ describe('getRandomPointOnRect', function(){
             expect(randPoint.x).not.toBeGreaterThan(10);
             expect(randPoint.y).not.toBeLessThan(0);
             expect(randPoint.y).not.toBeGreaterThan(10);
+            var randPoint1 = utils.getRandomPointOnRect(p2, p2, p3, p3);
+            console.log(randPoint1);
         }
     });
 });

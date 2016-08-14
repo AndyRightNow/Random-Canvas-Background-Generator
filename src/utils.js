@@ -21,7 +21,7 @@ Polygon.prototype = {
     equal: function(polygon) {
         var reversed = polygon.points;
         reversed.reverse();
-        
+
         return this.points.every(function(element, index) {
             return element.equal(polygon.points[index]);
         }) || this.points.every(function(element, index) {
@@ -46,6 +46,7 @@ function clamp(x, lower, upper){
  *	@param {boolean} isInt: The flag to specify whether the result is int or float
  */
  function getRandomNumberFromRange(lower, upper, isInt) {
+     if (lower >= upper) return 0;
      isInt = isInt || true;
     //--------------------------------------------------
     //	Some random numbers just coming out of nowhere
