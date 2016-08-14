@@ -10,6 +10,7 @@
  // Dependencies
  //-----------------------------
  var utils = require('./utils');
+ var Graph = require('./graph');
 
 /*
  * Base mode class constructor
@@ -56,10 +57,11 @@ function PolygonalMode(density, canvasWidth, canvasHeight, baseColors) {
     //----------------------------
     //  Class-specific members
     //----------------------------
-    this._density = density || 0.5;
+    this._density = density || 0.3;
 }
 utils.inherit(PolygonalMode, Mode);
 
+//  The upper bound of ratio
 PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.5;
 
 /*
@@ -67,14 +69,66 @@ PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.5;
  *
  * @return none
  */
-PolygonalMode.prototype._generatePoints = function() {
+PolygonalMode.prototype._generatePrimitives = function() {
+    //  Width and height of every small grid
     var widthInterval = this.DENSITY_RATO_UPPER_BOUND * this._density * this._width,
         heightInterval = this.DENSITY_RATO_UPPER_BOUND * this._density * this._height;
 
-    console.log(widthInterval, heightInterval);
+    //  Counts of rows and columns plus the top and left bounds of the rectangle
+    var rowCount = Math.floor(this._width / widthInterval) + 1,
+        colCount = Math.floor(this._height / heightInterval) + 1;
 
+    var graph = new Graph(rowCount, colCount);
 
+    //  Points of the small grid
+    var p1 = new Vector(0, 0),
+        p2 = new Vector(widthInterval, 0),
+        p3 = new Vector(widthInterval, heightInterval),
+        p4 = new Vector(0, heightInterval);
 
+    //  Randomly generate points on the canvas
+    for (let i = 0; i < rowCount; i++) {
+        for (let j = 0; j < colCount; j++) {
+            var randPoint;
+            if (j === 0) {
+                randPoint = utils.getRandomPointOnRect(p1, p1, p4, p4);
+            }
+            else if (j === colCount - 1) {
+                randPoint = utils.getRandomPointOnRect(p2, p2, p3, p3);
+            }
+            else {
+                if (i === 0) {
+                    randPoint = utils.getRandomPointOnRect(p1, p2, p2, p1);
+                }
+                else if (i === rowCount - 1) {
+                    randPoint = utils.getRandomPointOnRect(p4, p3, p3, p4);
+                }
+                else {
+                    randPoint = utils.getRandomPointOnRect(p1, p2, p3, p4);
+                }
+            }
+            graph.insert(i, j, randPoint);
+
+            p1.x += widthInterval;
+            p2.x += widthInterval;
+            p3.x += widthInterval;
+            p4.x += widthInterval;
+        }
+        p1.x = p4.x = 0;
+        p2.x = p3.x = widthInterval;
+        p1.y += heightInterval;
+        p2.y += heightInterval;
+        p3.y += heightInterval;
+        p4.y += heightInterval;
+    }
+
+    //  Connect all adjacent vertices
+    var visited = new Graph(rowCount, colCount);
+    for (let i = 0; i < rowCount; i++) {
+        for (let j = 0; j < colCount; j++) {
+
+        }
+    }
 };
 
 //  Export an object for direct lookup

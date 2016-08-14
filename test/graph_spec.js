@@ -30,7 +30,7 @@ describe('Graph.prototype.get', function(){
         g.insert(0, 0, 1);
 
         expect(g.get(0, 0)).toEqual(1);
-        expect(g.get(1, 1)).toBe(undefined);
+        expect(g.get(1, 1)).toBe(0);
         expect(g.get(100, 100)).toBeNull();
     });
 });

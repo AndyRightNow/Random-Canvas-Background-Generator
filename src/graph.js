@@ -4,12 +4,19 @@
  *
  */
 
-function Graph(rowCount, columnCount) {
+/*
+ * Graph class constructor
+ *
+ * @param {Integer} rowCount: The number of rows
+ * @param {Integer} columnCount: The number of columns
+ * @oaram {Any} initialValue(Optional): initialValue for all elements in the graph
+ */
+function Graph(rowCount, columnCount, initialValue) {
     this._rowCount = rowCount || 0;
     this._columnCount = columnCount || 0;
 
     //  Allocate an empty matrix
-    this._data = (new Array(rowCount)).fill(new Array(columnCount), 0);
+    this._data = new Array(rowCount).fill(new Array(columnCount).fill(initialValue || 0, 0), 0);
 
     this._edges = {};
 }
