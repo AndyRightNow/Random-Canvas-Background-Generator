@@ -84,7 +84,7 @@ utils.inherit(PolygonalMode, Mode);
 //  The bounds of ratio
 //----------------------
 PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND = 0.3;
-PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND = 0.0001;
+PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND = 0.01;
 PolygonalMode.prototype.DENSITY_RATO_DIF =
     PolygonalMode.prototype.DENSITY_RATO_UPPER_BOUND -
     PolygonalMode.prototype.DENSITY_RATO_LOWER_BOUND;
