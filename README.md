@@ -11,18 +11,22 @@ It's a simple plugin to drop into your HTML **without installation and dependenc
 Maybe because it looks quite pretty and is simple to use?
 
 ## How To Use It?
+
+Before all of steps below, make sure you have imported the module correctly.
+You can either use RequireJS to import file in ```dist/amd/``` or directly import it as a global variable in ```dist/global-var```.
+
 1. Make sure you have a HTML Canvas element on your web page and there is an id associated with it. If not, make one.
 2. Declare the RandomBackgroundGenerator Object in your js file.
     ```javascript
     var backgroundGen = new RandomBackgroundGenerator(
-        'canvas', 
+        'canvas',
         'Polygonal',
         '#AEA8D3', '#663399', '#BE90D4', '#E4F1FE');
     ```
     1) First parameter 'canvas': It's the id of the HTML Canvas element you want to generate on.
-    
+
     2) Second parameter 'Polygonal': It's the mode the generator will use to generate the background.
-    
+
     3) Third to the last parameters: Colors you want the background to have
 
 3. Set the detailed parameters of the mode.
