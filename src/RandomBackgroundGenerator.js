@@ -44,7 +44,7 @@ function RandomBackgroundGenerator(canvasId, mode, baseColors) {
 			this._canvas.clientHeight + this._canvas.clientHeight / 5);
 
 		if (arguments.length > 2) {	//	If any color is proviede
-			this._mode.setBaseColors.apply(this._mode, Array.from(arguments).slice(3, arguments.length));
+			this._mode.setBaseColors.apply(this._mode, Array.from(arguments).slice(2, arguments.length));
 		}
 	}
 }
