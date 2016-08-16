@@ -16,6 +16,7 @@ var utils = require('./utils');
 var colorUtils = require('./colorUtils');
 var Vector = require('./vector');
 var Modes = require('./modes');
+Array.from = require('./polyfills').from;
 
 /*
 *	Constant string name

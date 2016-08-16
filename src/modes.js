@@ -12,6 +12,7 @@
  var utils = require('./utils');
  var Graph = require('./graph');
  var Vector = require('./vector');
+ Array.from = require('./polyfills').from;
 
 /*
  * Base mode class constructor
