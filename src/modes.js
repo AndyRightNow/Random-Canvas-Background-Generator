@@ -122,6 +122,16 @@ Mode.prototype.getBaseColors = function() {
  */
 PolygonalMode.prototype.setDensity = function(density) {
     this._density = 1 - density;
+
+    //-------------------------
+    //  Optional mode: Separate
+    //  x and y densities
+    //-------------------------
+    if (arguments.length > 1) {
+        this._separateDensityMode = true;
+        this._xDensity = 1 - arguments[0];
+        this._yDensity = 1 - arguments[1];
+    }
 };
 /*
  * Public member function - return the density of polygons
@@ -150,12 +160,23 @@ PolygonalMode.prototype._generatePrimitives = function() {
     var widthInterval =  ratio * this._width,
         heightInterval = ratio * this._height;
 
+    //-----------------------------------
+    //  Check if optional separated densities
+    //  mode is on
+    //-----------------------------------
+    if (this._separateDensityMode) {
+        var xRatio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._xDensity,
+            yRatio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._yDensity;
+        widthInterval = this._width * xRatio;
+        heightInterval = this._height * yRatio;
+    }
+
     //-------------------------------------------------
     //  Counts of rows and columns plus the top
     //  and left bounds of the rectangle
     //-------------------------------------------------
-    var rowCount = Math.floor(this._width / widthInterval) + 1,
-        colCount = Math.floor(this._height / heightInterval) + 1;
+    var rowCount = Math.floor(this._height / heightInterval) + 1,
+        colCount = Math.floor(this._width / widthInterval) + 1;
 
     //  Use a graph to represent the grids on the canvas
     var graph = new Graph(rowCount, colCount);
