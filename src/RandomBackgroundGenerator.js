@@ -15,13 +15,15 @@
 var utils = require('./utils');
 var colorUtils = require('./colorUtils');
 var Vector = require('./vector');
-var Modes = require('./modes');
+var Modes = {
+	Polygonal: require('./polygonal.mode')
+};
 Array.from = require('./polyfills').from;
 
-/*
-*	Constant string name
-*/
-const POLYGONAL = "Polygonal";
+//--------------------
+//	Modes constants
+//------------------
+var POLYGONAL = 'Polygonal';
 
 /*
 * Constructor
@@ -40,7 +42,7 @@ function RandomBackgroundGenerator(canvasId, mode, baseColors) {
 	this._mode = null;
 
 	if (this._canvas) {	//	If canvas element exists
-		this._mode = new Modes[this._modeName](0.6,
+		this._mode = new Modes[this._modeName](0.6,	//	Default density
 			this._canvas.clientWidth + this._canvas.clientWidth / 5,
 			this._canvas.clientHeight + this._canvas.clientHeight / 5);
 
@@ -62,70 +64,17 @@ RandomBackgroundGenerator.prototype.getMode = function() {
 /*
  * Private helper function used to draw polygon on the canvas
  *
- * @param {string} color: A HEX, RGB or RGBA color in the form of
- *						   "#000000", "rgb(0, 0, 0)" or "rgba(0, 0, 0, 1)"
- * @param {Array} points: An array of Point objects
- * @param {boolean} gradient: A flag indicating if linear-gradient is enabled.
- *							   The gradient will be randomly generated.
+ * @param {Polygon} polygon: the polygon to draw
+ * @param {function} styleFunc: the function taking the canvas context as arguments and
+ *								set the style of this drawing
  *
  */
-RandomBackgroundGenerator.prototype._fillPolygon = function(color, polygon, gradient) {
-	gradient = gradient || false;
-
+RandomBackgroundGenerator.prototype._fillPolygon = function(polygon, styleFunc) {
 	//	Save the previous states
 	this._canvasContext.save();
 
-	//---------------------------
-	//	Set the color
-	//---------------------------
-	if (gradient) {
-		if (polygon.points.length === 3) {	//	If it's a triangle
-			//-------------------------------------------
-			//	Start and end points of the linear gradient
-			//	The start point is randomly selected
-			//-------------------------------------------
-			var startPoint = polygon.points[utils.getRandomNumberFromRange(0, polygon.points.length)];
-			var endPoint;
+	styleFunc(polygon, this._canvasContext);
 
-			//-------------------------------------
-			//	Fetch points other than the start point
-			//	out of the polygon
-			//-------------------------------------
-			var index = polygon.points.indexOf(startPoint);
-			var line = [];
-			for (var i = 0; i < polygon.points.length; i++)
-				if (i !== index) line.push(polygon.points[i]);
-
-			//-------------------------------------
-			//	Project the start point to the line
-			//	it's facing and that's the end point
-			//-------------------------------------
-			var axis = new Vector(line[0].x - line[1].x, line[0].y - line[1].y);
-			endPoint = startPoint.project(axis);
-
-			//	Create the linear gradient object
-			var grad = this._canvasContext.createLinearGradient(
-				startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-
-			//------------------------------------
-			//	Get random linear gradient colors
-			//	and add colors
-			//------------------------------------
-			var gradColors = colorUtils.randomGradient(colorUtils.randomColor(color,
-				utils.getRandomNumberFromRange(0, 0.3)),	//	Intensity of the base color
-					utils.getRandomNumberFromRange(0, 0.1));	//	Intensity of the random gradient
-			grad.addColorStop(0, gradColors.first);
-			grad.addColorStop(1, gradColors.second);
-
-			this._canvasContext.fillStyle = grad;
-		}
-		else {
-			this._canvasContext.fillStyle = colorUtils.randomColor(color);
-		}
-	}
-	else {
-		this._canvasContext.fillStyle = colorUtils.randomColor(color);
-	}
 	//-----------------------------------
 	//	Draw the polygon
 	//-----------------------------------
@@ -154,11 +103,9 @@ RandomBackgroundGenerator.prototype.generate = function(){
 	this._mode.generate();
 
 	var primitives = this._mode.getPrimitives();
-	var baseColors = this._mode.getBaseColors();
 
 	for (var i = 0; i < primitives.length; i++) {
-		var randColor = baseColors[utils.getRandomNumberFromRange(0, baseColors.length)];
-		this._fillPolygon(randColor, primitives[i], true);
+		this._fillPolygon(primitives[i].polygon, this._mode.getStyleFunc());
 	}
 };
 
