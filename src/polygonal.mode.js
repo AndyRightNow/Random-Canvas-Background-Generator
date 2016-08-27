@@ -322,8 +322,6 @@ PolygonalMode.prototype._generatePrimitives = function() {
             }
         }
     }
-
-
 };
 
 PolygonalMode.prototype.generate = function() {
