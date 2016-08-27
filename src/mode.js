@@ -9,27 +9,24 @@
  //-----------------------------
  // Dependencies
  //-----------------------------
- var utils = require('./utils');
- var Graph = require('./graph');
- var Vector = require('./vector');
  Array.from = require('./polyfills').from;
 
 /*
  * Base mode class constructor
  *
- * @param {Number} canvasWidth: The width of the canvas
- * @param {Number} canvasHeight: The height of the canvas
- * @param {String(Args)} baseColors: a set of variable number of color strings used
+ * @param {Number} argObj.canvasWidth: The width of the canvas
+ * @param {Number} argObj.canvasHeight: The height of the canvas
+ * @param {array} argObj.baseColors: a set of variable number of color strings used
  *                                   as the base colors of the background
  */
-function Mode(canvasWidth, canvasHeight, baseColors) {
+function Mode(argObj) {
     //----------------------------
     //  Base class members
     //----------------------------
-    this._baseColors = Array.from(arguments).slice(2, arguments.length);
+    this._baseColors = argObj.baseColors || [];
     this._primitives = [];
-    this._width = canvasWidth || 0;
-    this._height = canvasHeight || 0;
+    this._width = argObj.canvasWidth || 0;
+    this._height = argObj.canvasHeight || 0;
 }
 
 /*

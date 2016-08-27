@@ -14,24 +14,28 @@
 /*
  * Polygonal mode class constructor
  *
- * @param {float} density: The density of the polygons, in the range of [0, 1].
+ * @param {float} argObj.density: The density of the polygons, in the range of [0, 1].
  *                         0 is the sparsest and 1 is the densest.
- * @param {String(Args)} baseColors: a set of variable number of color strings used
+ * @param {array} argObj.baseColors: a set of variable number of color strings used
  *                                   as the base colors of the background
- * @param {Number} canvasWidth: The width of the canvas
- * @param {Number} canvasHeight: The height of the canvas
- * @param {Boolean} isMixed: A flag indicating if all colors are mixed or displayed one by one
+ * @param {Number} argObj.canvasWidth: The width of the canvas
+ * @param {Number} argObj.canvasHeight: The height of the canvas
+ * @param {Boolean} argObj.isMixed: A flag indicating if all colors are mixed or displayed one by one
  */
-function PolygonalMode(density, canvasWidth, canvasHeight, isMixed, baseColors) {
+function PolygonalMode(argObj) {
     //  Call the base constructor and init base class members
-    PolygonalMode._super.apply(this, Array.from(arguments).slice(1, arguments.length));
+    PolygonalMode._super.call(this, {
+        canvasWidth: argObj.canvasWidth || 0,
+        canvasHeight: argObj.canvasHeight || 0,
+        baseColors: argObj.baseColors || []
+    });
 
     //----------------------------
     //  Class-specific members
     //----------------------------
-    this._density = density || 0.5;
+    this._density = argObj.density || 0.6;
     this._density = 1 - this._density;
-	this._isMixed = isMixed || false;
+	this._isMixed = argObj.isMixed || false;
 }
 utils.inherit(PolygonalMode, Mode);
 
@@ -79,11 +83,10 @@ PolygonalMode.prototype._getBaseColors = function() {
  * @param {Polygon} polygon: The polygon to draw on
  * @param {Object} ctx: The canvas context
  */
-PolygonalMode.prototype._styleFunc = function (polygon, ctx) {
+PolygonalMode.prototype._originalStyleFunc = function (color, polygon, ctx) {
+    color = color[utils.getRandomNumberFromRange(0, color.length)];
     //  Get a random color
-    var color = this._getBaseColors()[utils.getRandomNumberFromRange(0, this._getBaseColors().length)],
-    //  Get 1 or 0(true or false) randomly
-        gradient = utils.getRandomNumberFromRange(0, 2);
+    var gradient = utils.getRandomNumberFromRange(0, 2);
 
     //---------------------------
     //	Set the color
@@ -324,6 +327,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
 };
 
 PolygonalMode.prototype.generate = function() {
+    this._styleFunc = this._originalStyleFunc.bind(this, this._getBaseColors());
     this._generatePrimitives();
 };
 

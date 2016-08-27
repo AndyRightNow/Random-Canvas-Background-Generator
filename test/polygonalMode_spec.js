@@ -3,9 +3,21 @@ var PolygonalMode = require('./../src/polygonal.mode');
 
 describe('PolygonalMode constructor', function(){
     it('is the constructor of PolygonalMode object', function(){
-        var polyMode1 = new PolygonalMode(0.2),
-            polyMode2 = new PolygonalMode(0.1, 200, 500, "#000000", "#FFFFFF"),
-            polyMode3 = new PolygonalMode(0.6, 300, 400, "#000000");
+        var polyMode1 = new PolygonalMode({
+            density: 0.2
+        }),
+            polyMode2 = new PolygonalMode({
+                density: 0.1,
+                canvasWidth: 200,
+                canvasHeight: 500,
+                baseColors: ["#000000", "#FFFFFF"]
+            }),
+            polyMode3 = new PolygonalMode({
+                density: 0.6,
+                canvasWidth: 300,
+                canvasHeight: 400,
+                baseColors: ["#000000"]
+            });
 
         //-------------------------
         //  Test base class members

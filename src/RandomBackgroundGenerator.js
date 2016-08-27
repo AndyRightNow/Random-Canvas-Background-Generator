@@ -12,9 +12,6 @@
 //-------------------------------
 //	Dependencies
 //-------------------------------
-var utils = require('./utils');
-var colorUtils = require('./colorUtils');
-var Vector = require('./vector');
 var Modes = {
 	Polygonal: require('./polygonal.mode')
 };
@@ -28,26 +25,29 @@ var POLYGONAL = 'Polygonal';
 /*
 * Constructor
 *
-* @param {string} canvasId: The id of the canvas you want to generate background on
-* @param {string} mode: The pattern in which the background is generated.
+* @param {string} argObj.canvasId: The id of the canvas you want to generate background on
+* @param {string} argObj.mode: The pattern in which the background is generated.
 *						 Currently Support: 1. "Polygonal"
-* @param {String(Args)} baseColors: a set of variable number of color strings used
+* @param {array} argObj.baseColors: a set of variable number of color strings used
 *                                   as the base colors of the background
 */
-function RandomBackgroundGenerator(canvasId, mode, baseColors) {
+function RandomBackgroundGenerator(argObj) {
+	argObj = argObj || {};
 	//	Initialize
-	this._canvas = typeof document !== 'undefined' ? document.getElementById(canvasId) : null;
+	this._canvas = typeof document !== 'undefined' ? document.getElementById(argObj.canvasId) : null;
 	this._canvasContext = this._canvas ? this._canvas.getContext('2d') : null;
-	this._modeName = mode || POLYGONAL;
+	this._modeName = argObj.mode || POLYGONAL;
 	this._mode = null;
 
 	if (this._canvas) {	//	If canvas element exists
-		this._mode = new Modes[this._modeName](0.6,	//	Default density
-			this._canvas.clientWidth + this._canvas.clientWidth / 5,
-			this._canvas.clientHeight + this._canvas.clientHeight / 5);
+		this._mode = new Modes[this._modeName]({
+			canvasWidth: this._canvas.clientWidth + this._canvas.clientWidth / 5,
+			canvasHeight: this._canvas.clientHeight + this._canvas.clientHeight / 5,
+			baseColors: argObj.baseColors || []
+		});
 
 		if (arguments.length > 2) {	//	If any color is proviede
-			this._mode.setBaseColors.apply(this._mode, Array.from(arguments).slice(2, arguments.length));
+			this._mode.setBaseColors.apply(this._mode, argObj.baseColors ? argObj.baseColors : []);
 		}
 	}
 }
@@ -73,7 +73,7 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(polygon, styleFunc) 
 	//	Save the previous states
 	this._canvasContext.save();
 
-	styleFunc(polygon, this._canvasContext);
+	styleFunc.call(this._mode, polygon, this._canvasContext);
 
 	//-----------------------------------
 	//	Draw the polygon
@@ -105,7 +105,7 @@ RandomBackgroundGenerator.prototype.generate = function(){
 	var primitives = this._mode.getPrimitives();
 
 	for (var i = 0; i < primitives.length; i++) {
-		this._fillPolygon(primitives[i].polygon, this._mode.getStyleFunc());
+		this._fillPolygon(primitives[i], this._mode.getStyleFunc());
 	}
 };
 

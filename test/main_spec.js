@@ -3,8 +3,13 @@ var RandomBackgroundGenerator = require('./../src/RandomBackgroundGenerator');
 
 describe('RandomBackgroundGenerator constructor', function(){
     it('is a constructor of RandomBackgroundGenerator', function(){
-        var obj1 = new RandomBackgroundGenerator('canvas', 'Polygonal'),
-            obj2 = new RandomBackgroundGenerator('canvas'),
+        var obj1 = new RandomBackgroundGenerator({
+            canvasId: 'canvas',
+            mode: 'Polygonal'
+        }),
+            obj2 = new RandomBackgroundGenerator({
+                canvasId: 'canvas'
+            }),
             obj3 = new RandomBackgroundGenerator();
 
         expect(obj1).toEqual(jasmine.any(RandomBackgroundGenerator));
