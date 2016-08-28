@@ -84,57 +84,51 @@ PolygonalMode.prototype._getBaseColors = function() {
  * @param {Object} ctx: The canvas context
  */
 PolygonalMode.prototype._originalStyleFunc = function (color, polygon, ctx) {
-    color = color[utils.getRandomNumberFromRange(0, color.length)];
     //  Get a random color
-    var gradient = utils.getRandomNumberFromRange(0, 2);
+    color = color[utils.getRandomNumberFromRange(0, color.length)];
 
     //---------------------------
     //	Set the color
     //---------------------------
-    if (gradient) {
-        if (polygon.points.length === 3) {	//	If it's a triangle
-            //-------------------------------------------
-            //	Start and end points of the linear gradient
-            //	The start point is randomly selected
-            //-------------------------------------------
-            var startPoint = polygon.points[utils.getRandomNumberFromRange(0, polygon.points.length)];
-            var endPoint;
+    if (polygon.points.length === 3) {	//	If it's a triangle
+        //-------------------------------------------
+        //	Start and end points of the linear gradient
+        //	The start point is randomly selected
+        //-------------------------------------------
+        var startPoint = polygon.points[utils.getRandomNumberFromRange(0, polygon.points.length)];
+        var endPoint;
 
-            //-------------------------------------
-            //	Fetch points other than the start point
-            //	out of the polygon
-            //-------------------------------------
-            var index = polygon.points.indexOf(startPoint);
-            var line = [];
-            for (var i = 0; i < polygon.points.length; i++)
-                if (i !== index) line.push(polygon.points[i]);
+        //-------------------------------------
+        //	Fetch points other than the start point
+        //	out of the polygon
+        //-------------------------------------
+        var index = polygon.points.indexOf(startPoint);
+        var line = [];
+        for (var i = 0; i < polygon.points.length; i++)
+            if (i !== index) line.push(polygon.points[i]);
 
-            //-------------------------------------
-            //	Project the start point to the line
-            //	it's facing and that's the end point
-            //-------------------------------------
-            var axis = new Vector(line[0].x - line[1].x, line[0].y - line[1].y);
-            endPoint = startPoint.project(axis);
+        //-------------------------------------
+        //	Project the start point to the line
+        //	it's facing and that's the end point
+        //-------------------------------------
+        var axis = new Vector(line[0].x - line[1].x, line[0].y - line[1].y);
+        endPoint = startPoint.project(axis);
 
-            //	Create the linear gradient object
-            var grad = ctx.createLinearGradient(
-                startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+        //	Create the linear gradient object
+        var grad = ctx.createLinearGradient(
+            startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 
-            //------------------------------------
-            //	Get random linear gradient colors
-            //	and add colors
-            //------------------------------------
-            var gradColors = colorUtils.randomGradient(colorUtils.randomColor(color,
-                utils.getRandomNumberFromRange(0, 0.3)),	//	Intensity of the base color
-                    utils.getRandomNumberFromRange(0, 0.1));	//	Intensity of the random gradient
-            grad.addColorStop(0, gradColors.first);
-            grad.addColorStop(1, gradColors.second);
+        //------------------------------------
+        //	Get random linear gradient colors
+        //	and add colors
+        //------------------------------------
+        var gradColors = colorUtils.randomGradient(colorUtils.randomColor(color,
+            utils.getRandomNumberFromRange(0, 0.1)),	//	Intensity of the base color
+                utils.getRandomNumberFromRange(0, 0.1));	//	Intensity of the random gradient
+        grad.addColorStop(0, gradColors.first);
+        grad.addColorStop(1, gradColors.second);
 
-            ctx.fillStyle = grad;
-        }
-        else {
-            ctx.fillStyle = colorUtils.randomColor(color);
-        }
+        ctx.fillStyle = grad;
     }
     else {
         ctx.fillStyle = colorUtils.randomColor(color);
