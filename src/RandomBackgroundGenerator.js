@@ -30,6 +30,7 @@ var POLYGONAL = 'Polygonal';
 *						 Currently Support: 1. "Polygonal"
 * @param {array} argObj.baseColors: a set of variable number of color strings used
 *                                   as the base colors of the background
+* @param {any...} argObj.any...: Any properties that can be used in a certain mode
 */
 function RandomBackgroundGenerator(argObj) {
 	argObj = argObj || {};
@@ -40,11 +41,9 @@ function RandomBackgroundGenerator(argObj) {
 	this._mode = null;
 
 	if (this._canvas) {	//	If canvas element exists
-		this._mode = new Modes[this._modeName]({
-			canvasWidth: this._canvas.clientWidth + this._canvas.clientWidth / 5,
-			canvasHeight: this._canvas.clientHeight + this._canvas.clientHeight / 5,
-			baseColors: argObj.baseColors || []
-		});
+		argObj.canvasWidth = this._canvas.clientWidth + this._canvas.clientWidth / 5;
+		argObj.canvasHeight = this._canvas.clientHeight + this._canvas.clientHeight / 5;
+		this._mode = new Modes[this._modeName](argObj);
 
 		if (arguments.length > 2) {	//	If any color is proviede
 			this._mode.setBaseColors.apply(this._mode, argObj.baseColors ? argObj.baseColors : []);

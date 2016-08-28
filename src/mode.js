@@ -18,6 +18,10 @@
  * @param {Number} argObj.canvasHeight: The height of the canvas
  * @param {array} argObj.baseColors: a set of variable number of color strings used
  *                                   as the base colors of the background
+ * @param {Object} argObj.density: The densities of x and y of the polygons, in the range of [0, 1].
+ *                         0 is the sparsest and 1 is the densest.
+ * @param {Number} argObj.density.x: The density of x of the polygons.
+ * @param {Number} argObj.density.y: The density of y of the polygons.
  */
 function Mode(argObj) {
     //----------------------------
@@ -27,7 +31,54 @@ function Mode(argObj) {
     this._width = argObj.canvasWidth || 0;
     this._height = argObj.canvasHeight || 0;
     this._primitives = [];
+
+    //--------------------------------
+    //  If only one axis is specified,
+    //  use the value for both axises.
+    //--------------------------------
+    if (argObj && argObj.density && //  If argObj and argObj.density are both not undefined
+        (argObj.density.x && !argObj.density.y) &&
+        (argObj.density.y && !argObj.density.x)) {  //  Only one axis of density is valid
+        argObj.density.x = argObj.density.y = argObj.density.x ? argObj.density.x : argObj.density.y;
+    }
+    this._xDensity = argObj.density ? argObj.density.x ? 1 - argObj.density.x : 0.6 : 0.6;
+    this._yDensity = argObj.density ? argObj.density.y ? 1 - argObj.density.y : 0.6 : 0.6;
 }
+
+/*
+ * Public member function - return the density of polygons
+ *
+ * @return {Object} density of x and y
+ */
+Mode.prototype.getDensity = function() {
+    return {
+        x: 1 - this._density.x,
+        y: 1 - this._density.y
+    };
+};
+
+/*
+ * Public member function - set the density of polygons
+ *
+ * @param {Number} argObj.x: Density on x axis
+ * @param {Number} argObj.y: Density on y axis
+ */
+Mode.prototype.setDensity = function(argObj) {
+    if (argObj) {
+        //--------------------------------
+        //  If only one axis is specified,
+        //  use the value for both axises.
+        //--------------------------------
+        if (argObj.density &&
+            (argObj.density.x && !argObj.density.y) &&
+            (argObj.density.y && !argObj.density.x)) {  //  Only one axis of density is valid
+            argObj.density.x = argObj.density.y = argObj.density.x ? argObj.density.x : argObj.density.y;
+        }
+
+        this._xDensity = argObj.x ? 1 - argObj.x : 0;
+        this._yDensity = argObj.y ? 1 - argObj.y : 0;
+    }
+};
 
 /*
  * Public virtual function - set the array of color strings

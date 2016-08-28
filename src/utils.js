@@ -2,35 +2,6 @@
 var Vector = require('./vector');
 
 /*
- *	Polygon class constructor
- *
- * @param {Array} points: The points of the polygon. They must be in clockwise or counter-clockwise order
- */
-function Polygon(points) {
-    this._points = points || [];
-}
-Polygon.prototype = {
-    get points() {
-        return this._points;
-    },
-
-    set points(points) {
-        this._points = points;
-    },
-
-    equal: function(polygon) {
-        var reversed = polygon.points;
-        reversed.reverse();
-
-        return this.points.every(function(element, index) {
-            return element.equal(polygon.points[index]);
-        }) || this.points.every(function(element, index) {
-            return element.equal(reversed[index]);
-        });
-    }
-};
-
-/*
  * Shrink a rectangle by value dx and value dy
  *
  * @return {Object} an object consisting of transformed p1, p2, p3, p4
@@ -142,7 +113,6 @@ function getRandomPointOnLine(p1, p2) {
 
 //  Exports
 module.exports = {
-    Polygon: Polygon,
     clamp: clamp,
     getRandomNumberFromRange: getRandomNumberFromRange,
     getRandomPointOnRect: getRandomPointOnRect,

@@ -4,16 +4,22 @@ var OverlappedRectanglesMode = require('./../src/overlapped-rectangles.mode');
 describe('OverlappedRectanglesMode constructor', function(){
     it('is the constructor of OverlappedRectanglesMode object', function(){
         var mode1 = new OverlappedRectanglesMode({
-            density: 0.2
+            density: {
+                x: 0.2
+            }
         }),
             mode2 = new OverlappedRectanglesMode({
-                density: 0.1,
+                density: {
+                    x: 0.1, y: 0.1
+                },
                 canvasWidth: 200,
                 canvasHeight: 500,
                 baseColors: ["#000000", "#FFFFFF"]
             }),
             mode3 = new OverlappedRectanglesMode({
-                density: 0.6,
+                density: {
+                    x: 0.6, y: 0.6
+                },
                 canvasWidth: 300,
                 canvasHeight: 400,
                 baseColors: ["#000000"]
@@ -27,9 +33,9 @@ describe('OverlappedRectanglesMode constructor', function(){
         expect(mode1._width).toEqual(0);
         expect(mode1._height).toEqual(0);
 
-        expect(mode1._density).toEqual(0.8);
-        expect(mode2._density).toEqual(0.9);
-        expect(mode3._density).toEqual(0.4);
+        expect(mode1._xDensity).toEqual(0.8);
+        expect(mode2._xDensity).toEqual(0.9);
+        expect(mode3._yDensity).toEqual(0.4);
 
         expect(mode2._width).toEqual(200);
         expect(mode2._height).toEqual(500);

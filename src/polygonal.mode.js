@@ -7,6 +7,7 @@
 
  var Mode = require('./mode');
  var utils = require('./utils');
+ var Polygon = require('./polygon');
  var Graph = require('./graph');
  var Vector = require('./vector');
  var colorUtils = require('./colorUtils');
@@ -14,8 +15,10 @@
 /*
  * Polygonal mode class constructor
  *
- * @param {float} argObj.density: The density of the polygons, in the range of [0, 1].
+ * @param {Object} argObj.density: The densities of x and y of the polygons, in the range of [0, 1].
  *                         0 is the sparsest and 1 is the densest.
+ * @param {Object} argObj.density.x: The density of x of the polygons.
+ * @param {Object} argObj.density.y: The density of y of the polygons.
  * @param {array} argObj.baseColors: a set of variable number of color strings used
  *                                   as the base colors of the background
  * @param {Number} argObj.canvasWidth: The width of the canvas
@@ -24,17 +27,11 @@
  */
 function PolygonalMode(argObj) {
     //  Call the base constructor and init base class members
-    PolygonalMode._super.call(this, {
-        canvasWidth: argObj.canvasWidth || 0,
-        canvasHeight: argObj.canvasHeight || 0,
-        baseColors: argObj.baseColors || []
-    });
+    PolygonalMode._super.call(this, argObj);
 
     //----------------------------
     //  Class-specific members
     //----------------------------
-    this._density = argObj.density || 0.6;
-    this._density = 1 - this._density;
 	this._isMixed = argObj.isMixed || false;
 }
 utils.inherit(PolygonalMode, Mode);
@@ -78,7 +75,7 @@ PolygonalMode.prototype._getBaseColors = function() {
  * Public member function - Styling function for polygons. It instructs the canvas
  * context to create certain styles for polygons
  *
- * @param {string} color: The base color for this polygon
+ * @param {string} color: The base color for this
  * @param {boolean} gradient: The flag indicating if gradient is enabled
  * @param {Polygon} polygon: The polygon to draw on
  * @param {Object} ctx: The canvas context
@@ -135,35 +132,9 @@ PolygonalMode.prototype._originalStyleFunc = function (color, polygon, ctx) {
     }
 };
 
-/*
- * Public member function - set the density of polygons
- *
- */
-PolygonalMode.prototype.setDensity = function(density) {
-    this._density = 1 - density;
-
-    //-------------------------
-    //  Optional mode: Separate
-    //  x and y densities
-    //-------------------------
-    if (arguments.length > 1) {
-        this._separateDensityMode = true;
-        this._xDensity = 1 - arguments[0];
-        this._yDensity = 1 - arguments[1];
-    }
-};
-/*
- * Public member function - return the density of polygons
- *
- * @return {float} density
- */
-PolygonalMode.prototype.getDensity = function() {
-    return 1 - this._density;
-};
-
 
 /*
- * Private helper function - generate points to draw with
+ * Private helper function - generate polygons to draw with
  * It divides the whole canvas into small grids and generate a random point in every
  * grid
  *
@@ -176,20 +147,10 @@ PolygonalMode.prototype._generatePrimitives = function() {
     //-----------------------------------------
     //  Width and height of every small grid
     //-----------------------------------------
-    var ratio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._density;
-    var widthInterval =  ratio * this._width,
-        heightInterval = ratio * this._height;
-
-    //-----------------------------------
-    //  Check if optional separated densities
-    //  mode is on
-    //-----------------------------------
-    if (this._separateDensityMode) {
-        var xRatio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._xDensity,
-            yRatio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._yDensity;
-        widthInterval = this._width * xRatio;
+    var xRatio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._xDensity,
+        yRatio = this.DENSITY_RATO_LOWER_BOUND + this.DENSITY_RATO_DIF * this._yDensity;
+    var widthInterval = this._width * xRatio,
         heightInterval = this._height * yRatio;
-    }
 
     //-------------------------------------------------
     //  Counts of rows and columns plus the top
@@ -293,7 +254,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
                     }
                     else {
                         this._primitives.push(
-                            new utils.Polygon([   //  Add polygon
+                            new Polygon([   //  Add polygon
                                 graph.get(i, j),
                                 prevPoint,
                                 currPoint]));
@@ -309,7 +270,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
                 prevPoint !== undefined &&
                 !firstPoint.equal(prevPoint)) {
                 this._primitives.push(
-                    new utils.Polygon([
+                    new Polygon([
                         graph.get(i, j),
                         prevPoint,
                         firstPoint]));
@@ -318,11 +279,16 @@ PolygonalMode.prototype._generatePrimitives = function() {
     }
 };
 
+/*
+ * Private member function - interface of generating primitives
+ *
+ * @return none
+ */
 PolygonalMode.prototype.generate = function() {
     //  Bind a random color to the original styling function
     this._styleFunc = this._originalStyleFunc.bind(this, this._getBaseColors());
     this._generatePrimitives();
 };
 
-//  Export 
+//  Export
 module.exports = PolygonalMode;

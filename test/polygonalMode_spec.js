@@ -4,16 +4,22 @@ var PolygonalMode = require('./../src/polygonal.mode');
 describe('PolygonalMode constructor', function(){
     it('is the constructor of PolygonalMode object', function(){
         var polyMode1 = new PolygonalMode({
-            density: 0.2
+            density: {
+                x: 0.2
+            }
         }),
             polyMode2 = new PolygonalMode({
-                density: 0.1,
+                density: {
+                    x: 0.1, y: 0.1
+                },
                 canvasWidth: 200,
                 canvasHeight: 500,
                 baseColors: ["#000000", "#FFFFFF"]
             }),
             polyMode3 = new PolygonalMode({
-                density: 0.6,
+                density: {
+                    x: 0.6, y: 0.6
+                },
                 canvasWidth: 300,
                 canvasHeight: 400,
                 baseColors: ["#000000"]
@@ -27,9 +33,9 @@ describe('PolygonalMode constructor', function(){
         expect(polyMode1._width).toEqual(0);
         expect(polyMode1._height).toEqual(0);
 
-        expect(polyMode1._density).toEqual(0.8);
-        expect(polyMode2._density).toEqual(0.9);
-        expect(polyMode3._density).toEqual(0.4);
+        expect(polyMode1._xDensity).toEqual(0.8);
+        expect(polyMode2._xDensity).toEqual(0.9);
+        expect(polyMode3._yDensity).toEqual(0.4);
 
         expect(polyMode2._width).toEqual(200);
         expect(polyMode2._height).toEqual(500);
