@@ -24,9 +24,9 @@ function Mode(argObj) {
     //  Base class members
     //----------------------------
     this._baseColors = argObj.baseColors || [];
-    this._primitives = [];
     this._width = argObj.canvasWidth || 0;
     this._height = argObj.canvasHeight || 0;
+    this._primitives = [];
 }
 
 /*

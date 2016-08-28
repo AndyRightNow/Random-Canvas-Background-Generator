@@ -324,5 +324,5 @@ PolygonalMode.prototype.generate = function() {
     this._generatePrimitives();
 };
 
-//  Export an object for direct lookup
+//  Export 
 module.exports = PolygonalMode;
