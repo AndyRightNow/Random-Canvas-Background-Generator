@@ -28,6 +28,7 @@
   *                                   this value will be the maximum width.
   * @param {Number} argObj.rectHeight: The height of rectangles. If random flag is specified,
   *                                   this value will be the maximum height.
+  * @param {boolean} argObj.isRandom: The flag indicating if the sizes of rectangles are randomly generated
   */
  function OverlappedRectanglesMode(argObj) {
      //  Call the base constructor and init base class members

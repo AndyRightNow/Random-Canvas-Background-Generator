@@ -16,6 +16,12 @@ Polygon.prototype = {
         this._points = points;
     },
 
+    /*
+     * Test if two polygons are equal
+     *
+     * @return {boolean} true if equal false if not
+     * @param {Number} polygon: The other polygon to test
+     */
     equal: function(polygon) {
         var reversed = polygon.points;
         reversed.reverse();
@@ -25,6 +31,41 @@ Polygon.prototype = {
         }) || this.points.every(function(element, index) {
             return element.equal(reversed[index]);
         });
+    },
+
+    /*
+     * Translate the polygon BY certain dx and dy
+     *
+     * @return {Polygon} itself for chaining
+     * @param {Number} dx, dy: The distance x and y to translate
+     */
+    translate: function(dx, dy) {
+        this.points.map(function(ele){
+            return ele.translate(dx, dy);
+        });
+        return this;
+    },
+
+    /*
+     * Rotate the polygon around a certain origin clockwise
+     *
+     * @return {Polygon} itself for chaining
+     * @param {Number} angle: The angle to rotate
+     * @param {Vector} origin: The origin to rotate around
+     */
+    rotate: function(angle, origin) {
+        //------------------------------
+        //  Translate back with the specified
+        //  origin matching the origin of the canvas
+        //------------------------------
+        this.translate(-origin.x, -origin.y);
+
+        this.points.map(function(ele){
+            return ele.rotate(angle);
+        });
+
+        this.translate(origin.x, origin.y);
+        return this;
     }
 };
 

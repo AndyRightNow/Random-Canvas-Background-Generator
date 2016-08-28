@@ -56,3 +56,39 @@ describe('Polygon.equal', function(){
         expect(poly2.equal(poly3)).toBe(true);
     });
 });
+
+describe('Polygon.translate', function(){
+    it('is a function to translate the polygon BY certain dx and dx', function(){
+        var poly = new Polygon([
+                new Vector(0, 0),
+                new Vector(10, 0),
+                new Vector(10, 10),
+                new Vector(0, 10)]).translate(10, 10);
+        expect(poly.points[0].x).toEqual(10);
+        expect(poly.points[0].y).toEqual(10);
+        expect(poly.points[1].x).toEqual(20);
+        expect(poly.points[1].y).toEqual(10);
+        expect(poly.points[2].x).toEqual(20);
+        expect(poly.points[2].y).toEqual(20);
+        expect(poly.points[3].x).toEqual(10);
+        expect(poly.points[3].y).toEqual(20);
+    });
+});
+
+describe('Polygon.rotate', function(){
+    it('is a function to rotate the polygon around an origin', function(){
+        var poly = new Polygon([
+                new Vector(0, 0),
+                new Vector(10, 0),
+                new Vector(10, 10),
+                new Vector(0, 10)]).rotate(180, new Vector(5, 5));
+        expect(poly.points[0].x).toBeCloseTo(10);
+        expect(poly.points[0].y).toBeCloseTo(10);
+        expect(poly.points[1].x).toBeCloseTo(0);
+        expect(poly.points[1].y).toBeCloseTo(10);
+        expect(poly.points[2].x).toBeCloseTo(0);
+        expect(poly.points[2].y).toBeCloseTo(0);
+        expect(poly.points[3].x).toBeCloseTo(10);
+        expect(poly.points[3].y).toBeCloseTo(0);
+    });
+});
