@@ -319,6 +319,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
 };
 
 PolygonalMode.prototype.generate = function() {
+    //  Bind a random color to the original styling function
     this._styleFunc = this._originalStyleFunc.bind(this, this._getBaseColors());
     this._generatePrimitives();
 };
