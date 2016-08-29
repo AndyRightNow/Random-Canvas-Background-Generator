@@ -88,7 +88,7 @@ function adjustColorBrightness(color, percentage) {
  *												  1 means generate around maximum brightness changes.
  *												  The brightness changes will be either drakening or brightening.
  */
- function randomColor(baseColor, brightnessIntensity){
+ function randomColorBrightness(baseColor, brightnessIntensity){
      brightnessIntensity = brightnessIntensity || 0.5;
      var threshold = 0.2,
          rangeLower = utils.clamp(brightnessIntensity - threshold, 0, 1),
@@ -115,8 +115,8 @@ function adjustColorBrightness(color, percentage) {
  function randomGradient(baseColor, brightnessIntensity) {
      brightnessIntensity = brightnessIntensity || 0.5;
      return {
-         first: randomColor(baseColor, brightnessIntensity),
-         second: randomColor(baseColor, brightnessIntensity)
+         first: randomColorBrightness(baseColor, brightnessIntensity),
+         second: randomColorBrightness(baseColor, brightnessIntensity)
      };
  }
 
@@ -126,5 +126,5 @@ module.exports.isRgb = isRgb;
 module.exports.isRgba = isRgba;
 module.exports.hexToRgb = hexToRgb;
 module.exports.adjustColorBrightness = adjustColorBrightness;
-module.exports.randomColor = randomColor;
+module.exports.randomColorBrightness = randomColorBrightness;
 module.exports.randomGradient = randomGradient;

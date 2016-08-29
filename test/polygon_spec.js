@@ -92,3 +92,17 @@ describe('Polygon.rotate', function(){
         expect(poly.points[3].y).toBeCloseTo(0);
     });
 });
+
+describe('Polygon.clone', function(){
+    it('is a function to clone the polygon', function(){
+        var poly = new Polygon([
+                new Vector(0, 0),
+                new Vector(10, 0),
+                new Vector(10, 10),
+                new Vector(0, 10)]);
+        var cloned = poly.clone();
+        cloned.points[0].x = 100;
+        expect(poly.points[0].x).toEqual(0);
+        expect(cloned.points[0].x).toEqual(100);
+    });
+});

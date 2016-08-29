@@ -55,7 +55,7 @@ Polygon.prototype = {
      */
     rotate: function(angle, origin) {
         //------------------------------
-        //  Translate back with the specified
+        //  Translate to a position where the specified
         //  origin matching the origin of the canvas
         //------------------------------
         this.translate(-origin.x, -origin.y);
@@ -64,8 +64,23 @@ Polygon.prototype = {
             return ele.rotate(angle);
         });
 
+        //------------------------------
+        //  Translate back to original position
+        //------------------------------
         this.translate(origin.x, origin.y);
         return this;
+    },
+
+    /*
+     * Public member function - clone the polygon
+     *
+     */
+    clone: function() {
+        var clonedPoints = [];
+        this.points.forEach(function(ele){
+            clonedPoints.push(ele.clone());
+        });
+        return new Polygon(clonedPoints);
     }
 };
 

@@ -79,17 +79,17 @@ describe('adjustColorBrightness', function(){
 });
 
 
-describe('randomColor', function(){
+describe('randomColorBrightness', function(){
     it('is a function to generate random color with random brightness', function(){
         test.OUTPUT("randomColor Test data: ");
         var color1 = "#0F0F0F",
             color2 = "rgb(0, 24, 52)",
             color3 = "rgba(23, 52, 12, 1)",
             color4 = "#23";
-        var rand1 = colorUtils.randomColor(color1, 0.3),
-            rand2 = colorUtils.randomColor(color2, 0.2),
-            rand3 = colorUtils.randomColor(color3, 0.7),
-            rand4 = colorUtils.randomColor(color4);
+        var rand1 = colorUtils.randomColorBrightness(color1, 0.3),
+            rand2 = colorUtils.randomColorBrightness(color2, 0.2),
+            rand3 = colorUtils.randomColorBrightness(color3, 0.7),
+            rand4 = colorUtils.randomColorBrightness(color4);
         test.OUTPUT(color1, rand1);
         test.OUTPUT(color2, rand2);
         test.OUTPUT(color3, rand3);

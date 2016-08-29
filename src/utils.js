@@ -37,7 +37,8 @@ function clamp(x, lower, upper){
  *	@param {boolean} isInt: The flag to specify whether the result is int or float
  */
  function getRandomNumberFromRange(lower, upper, isInt) {
-     if (lower >= upper) return 0;
+     if (lower > upper) return null;
+     if (lower == upper) return lower;
      isInt = isInt || true;
     //--------------------------------------------------
     //	Some random numbers just coming out of nowhere

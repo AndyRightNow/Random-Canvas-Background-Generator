@@ -13,14 +13,16 @@
 //	Dependencies
 //-------------------------------
 var Modes = {
-	Polygonal: require('./polygonal.mode')
+	Polygonal: require('./polygonal.mode'),
+	OverlappedRectangles: require('./overlapped-rectangles.mode')
 };
 Array.from = require('./polyfills').from;
 
 //--------------------
 //	Modes constants
 //------------------
-var POLYGONAL = 'Polygonal';
+var POLYGONAL = 'Polygonal',
+	OVERLAPPED_RECTANGLES = 'OverlappedRectangles';
 
 /*
 * Constructor
