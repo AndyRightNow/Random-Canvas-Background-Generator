@@ -51,3 +51,7 @@ Working on it...
 1. 'Polygonal'
 
     A mode to generate background with a bunch of randomly different polygons with different brightness and etc. See [Google Image - Polygonal Background](https://www.google.com/search?q=polygonal+background&newwindow=1&rlz=1C1CHWL_zh-CNCN678SG678&espv=2&biw=1366&bih=643&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiWzJ_7qsHOAhVN62MKHUrJCiQQ_AUIBigB) for reference.
+
+1. 'OverlappedRectangles'
+
+    A mode to generate background with a bunch of randomly different and overlapped rectangles with different brightness.
