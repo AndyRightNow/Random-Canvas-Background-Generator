@@ -41,15 +41,12 @@ function RandomBackgroundGenerator(argObj) {
 	this._canvasContext = this._canvas ? this._canvas.getContext('2d') : null;
 	this._modeName = argObj.mode || POLYGONAL;
 	this._mode = null;
+	this._canvasWidth = this._canvasHeight = 0;
 
 	if (this._canvas) {	//	If canvas element exists
-		argObj.canvasWidth = this._canvas.clientWidth + this._canvas.clientWidth / 5;
-		argObj.canvasHeight = this._canvas.clientHeight + this._canvas.clientHeight / 5;
+		argObj.canvasWidth = this._canvasWidth = this._canvas.clientWidth + this._canvas.clientWidth / 5;
+		argObj.canvasHeight = this._canvasHeight = this._canvas.clientHeight + this._canvas.clientHeight / 5;
 		this._mode = new Modes[this._modeName](argObj);
-
-		if (arguments.length > 2) {	//	If any color is proviede
-			this._mode.setBaseColors.apply(this._mode, argObj.baseColors ? argObj.baseColors : []);
-		}
 	}
 }
 
@@ -60,6 +57,24 @@ function RandomBackgroundGenerator(argObj) {
  */
 RandomBackgroundGenerator.prototype.getMode = function() {
 	return this._mode;
+};
+
+/*
+ * Public member function - set(change) the current mode
+ *
+ *
+ * @param {string} argObj.mode: The pattern in which the background is generated.
+ *						 Currently Support: 1. "Polygonal"
+ * @param {array} argObj.baseColors: a set of variable number of color strings used
+ *                                   as the base colors of the background
+ * @param {any...} argObj.any...: Any properties that can be used in a certain mode
+ */
+RandomBackgroundGenerator.prototype.getMode = function(argObj) {
+	argObj.canvasWidth = this._canvasWidth;
+	argObj.canvasHeight = this._canvasHeight;
+
+	this._modeName = argObj.mode || POLYGONAL;
+	this._mode = new Modes[this._modeName](argObj);
 };
 
 /*
