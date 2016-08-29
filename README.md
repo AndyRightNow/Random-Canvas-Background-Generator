@@ -21,7 +21,7 @@ You can either use RequireJS to import file in ```dist/amd/``` or directly impor
     var backgroundGen = new RandomBackgroundGenerator({
         canvasId: 'canvas',
         mode: 'Polygonal',
-        baseColors: '#AEA8D3', '#663399', '#BE90D4', '#E4F1FE',
+        baseColors: ['#AEA8D3', '#663399', '#BE90D4', '#E4F1FE'],
         density: {
             x: 0.7, y: 0.8
         },
