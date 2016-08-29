@@ -37,7 +37,7 @@ You can either use RequireJS to import file in ```dist/amd/``` or directly impor
 
 ## Example Page
 
-The background of [My Personal Website](andyrightnow.github.io).
+The background of [My Personal Website](https://andyrightnow.github.io).
 
 ## Modes Currently Supported
 
