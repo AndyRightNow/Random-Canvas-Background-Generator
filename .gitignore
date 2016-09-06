@@ -2,3 +2,4 @@ node_modules
 spec
 webpack.config.js
 test/htmlTest
+.vscode
