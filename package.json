@@ -4,7 +4,7 @@
   "description": "A js plugin to randomly generate background for HTML canvas",
   "main": "RandomBackgroundGenerator.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
