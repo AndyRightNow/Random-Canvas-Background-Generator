@@ -1,6 +1,6 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 
-/*
+/**
  * Overlapped Rectangle Mode object
  *
  */
@@ -14,7 +14,7 @@ var Vector = require('./vector');
 var colorUtils = require('./colorUtils');
 var Polygon = require('./polygon');
 
-/*
+/**
  * Overlapped rectangles mode class constructor
  *
  * @param {Object} argObj.density: The densities of x and y of the polygons, in the range of [0, 1].
@@ -59,7 +59,7 @@ function OverlappedRectanglesMode(argObj) {
 }
 utils.inherit(OverlappedRectanglesMode, Mode);
 
-/*
+/**
  * Set the size of the rectangle
  *
  * @param {Number} argObj.rectWidth: The width of rectangles. If random flag is specified,
@@ -89,7 +89,7 @@ OverlappedRectanglesMode.prototype.setRectSize = function(argObj) {
     }
 };
 
-/*
+/**
  * Private member function - return an array of color strings based on the mix mode
  *
  * @return {Array} An array of color strings
@@ -98,7 +98,7 @@ OverlappedRectanglesMode.prototype._getBaseColors = function() {
     return this._isMixed ? this._baseColors : [this._baseColors[utils.getRandomNumberFromRange(0, this._baseColors.length)]];
 };
 
-/*
+/**
  * Public member function - Styling function for polygons. It instructs the canvas
  * context to create certain styles for polygons
  *
@@ -120,7 +120,7 @@ OverlappedRectanglesMode.prototype._originalStyleFunc = function(color, polygon,
 //  The number of polygons on every small grid
 OverlappedRectanglesMode.prototype._POLYGON_COUNT_PER_GRID_MAX = 5;
 
-/*
+/**
  * Private helper function - generate polygons to draw with
  *
  * @return none
@@ -186,7 +186,7 @@ OverlappedRectanglesMode.prototype._generatePrimitives = function() {
         }
 };
 
-/*
+/**
  * Private member function - interface of generating primitives
  *
  * @return none

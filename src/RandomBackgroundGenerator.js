@@ -1,6 +1,6 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 
-/*
+/**
  * Random Canvas Background Generator
  *
  * It's used on HTML Canvas to generate random background in a certain pattern
@@ -24,7 +24,7 @@ Array.from = require('./polyfills').from;
 var POLYGONAL = 'Polygonal',
 	OVERLAPPED_RECTANGLES = 'OverlappedRectangles';
 
-/*
+/**
 * Constructor
 *
 * @param {string} argObj.canvasId: The id of the canvas you want to generate background on
@@ -50,7 +50,7 @@ function RandomBackgroundGenerator(argObj) {
 	}
 }
 
-/*
+/**
  * Public member function - return the current mode
  *
  * @return {Mode} the current mode
@@ -59,7 +59,7 @@ RandomBackgroundGenerator.prototype.getMode = function() {
 	return this._mode;
 };
 
-/*
+/**
  * Public member function - set(change) the current mode
  *
  *
@@ -77,7 +77,7 @@ RandomBackgroundGenerator.prototype.getMode = function(argObj) {
 	this._mode = new Modes[this._modeName](argObj);
 };
 
-/*
+/**
  * Private helper function used to draw polygon on the canvas
  *
  * @param {Polygon} polygon: the polygon to draw
@@ -110,7 +110,7 @@ RandomBackgroundGenerator.prototype._fillPolygon = function(polygon, styleFunc) 
 	this._canvasContext.restore();
 };
 
-/*
+/**
  * Public member function - clear the canvas and generate a background with the mode
  */
 RandomBackgroundGenerator.prototype.generate = function(){

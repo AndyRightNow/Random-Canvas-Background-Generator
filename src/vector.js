@@ -1,10 +1,10 @@
-/*
+/**
  *              Vector Class
  *
  *      Vector and vector operations.
  */
 
-/*
+/**
  *  Constructor
  */
 function Vector(x, y){

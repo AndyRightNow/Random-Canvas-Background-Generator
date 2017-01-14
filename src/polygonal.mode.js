@@ -1,6 +1,6 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 
-/*
+/**
  * Polygonal Mode object
  *
  */
@@ -12,7 +12,7 @@ var Graph = require('./graph');
 var Vector = require('./vector');
 var colorUtils = require('./colorUtils');
 
-/*
+/**
  * Polygonal mode class constructor
  *
  * @param {Object} argObj.density: The densities of x and y of the polygons, in the range of [0, 1].
@@ -36,7 +36,7 @@ function PolygonalMode(argObj) {
 }
 utils.inherit(PolygonalMode, Mode);
 
-/*
+/**
  * Public member function - set the mix mode
  *
  */
@@ -44,7 +44,7 @@ PolygonalMode.prototype.setMixed = function(flag) {
     this._isMixed = flag;
 };
 
-/*
+/**
  * Public member function - return the mix mode
  *
  * @return {Mode} the current mix mode
@@ -53,7 +53,7 @@ PolygonalMode.prototype.isMixed = function() {
     return this._isMixed;
 };
 
-/*
+/**
  * Private member function - return an array of color strings based on the mix mode
  *
  * @return {Array} An array of color strings
@@ -62,7 +62,7 @@ PolygonalMode.prototype._getBaseColors = function() {
     return this._isMixed ? this._baseColors : [this._baseColors[utils.getRandomNumberFromRange(0, this._baseColors.length)]];
 };
 
-/*
+/**
  * Public member function - Styling function for polygons. It instructs the canvas
  * context to create certain styles for polygons
  *
@@ -123,7 +123,7 @@ PolygonalMode.prototype._originalStyleFunc = function(color, polygon, ctx) {
 };
 
 
-/*
+/**
  * Private helper function - generate polygons to draw with
  * It divides the whole canvas into small grids and generate a random point in every
  * grid
@@ -260,7 +260,7 @@ PolygonalMode.prototype._generatePrimitives = function() {
     }
 };
 
-/*
+/**
  * Private member function - interface of generating primitives
  *
  * @return none

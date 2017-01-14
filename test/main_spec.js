@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 var RandomBackgroundGenerator = require('./../src/RandomBackgroundGenerator');
 
 describe('RandomBackgroundGenerator constructor', function(){

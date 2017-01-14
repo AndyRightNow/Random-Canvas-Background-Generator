@@ -1,12 +1,12 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 
-/*
+/**
  * Undirected acylic graph data structure using
  * adjaceny matrix as implementation
  *
  */
 
-/*
+/**
  * Graph class constructor
  *
  * @param {Integer} rowCount: The number of rows
@@ -28,7 +28,7 @@ function Graph(rowCount, columnCount, initialValue) {
     this._edges = {};
 }
 
-/*
+/**
  * Private member function - check if a pair of positions is in the range of rows and columns
  *
  * @return {Boolean} true if the pair of positions is in the bound and false if not
@@ -42,7 +42,7 @@ Graph.prototype._checkBound = function(i, j) {
     return true;
 };
 
-/*
+/**
  * Private member function - get an id from a pair of positions
  *
  * @return {String} The id of the pair of positions
@@ -53,20 +53,20 @@ Graph.prototype._getId = function(i, j) {
     return this._checkBound(i, j) ? i.toString() + j.toString() : null;
 };
 
-/*
+/**
  * Public member function - return the count of rows
  */
 Graph.prototype.rowCount = function() {
     return this._rowCount;
 };
-/*
+/**
  * Public member function - return the count of columns
  */
 Graph.prototype.columnCount = function() {
     return this._columnCount;
 };
 
-/*
+/**
  * Public member function - insert an element to the graph
  *
  * @return {Boolean} true if insertion is successful and false if not
@@ -82,7 +82,7 @@ Graph.prototype.insert = function(i, j, value) {
     else return false;
 };
 
-/*
+/**
  * Public member function - get a element from a pair of position
  *
  * @return {Any / null} The element at the position if the pair of positions is in the bound
@@ -97,7 +97,7 @@ Graph.prototype.get = function(i, j) {
     else return null;
 };
 
-/*
+/**
  * Public member function - check if two vertices are connected
  *
  * @return {Boolean} true if there is a connection between two elements
@@ -117,7 +117,7 @@ Graph.prototype.isConnected = function(i1, j1, i2, j2) {
     return this._edges[id1][id2];
 };
 
-/*
+/**
  * Public member function - connect the edge of two vertices
  *
  * @return {Boolean} true if the action is successful
@@ -139,7 +139,7 @@ Graph.prototype.connect = function(i1, j1, i2, j2) {
     return true;
 };
 
-/*
+/**
  * Public member function - disconnect the edge of two vertices
  *
  * @return {Boolean} true if the action is successful

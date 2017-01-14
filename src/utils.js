@@ -1,7 +1,7 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 var Vector = require('./vector');
 
-/*
+/**
  * Shrink a rectangle by value dx and value dy
  *
  * @return {Object} an object consisting of transformed p1, p2, p3, p4
@@ -21,14 +21,14 @@ function shrinkRect(p1, p2, p3, p4, byDx, byDy) {
     };
 }
 
-/*
+/**
  *  Clamp a number within a range
  */
 function clamp(x, lower, upper){
     return x < lower ? lower : x > upper ? upper : x;
 }
 
-/*
+/**
  *	Get a random number from a range
  *
  *	@return {int / float} A randomly generated number within a range
@@ -57,7 +57,7 @@ function clamp(x, lower, upper){
     }
 }
 
-/*
+/**
  *  Get a random point on a rectangle
  *
  *	@param {Vector} p1, p2, p3, p4: Points of a rectangle starting
@@ -78,7 +78,7 @@ function getRandomPointOnRect(p1, p2, p3, p4, isInt) {
     return new Vector(topLeftX + randomDeltaX, topLeftY + randomDeltaY);
 }
 
-/*
+/**
  *  Get a random point on a line
  *  @param {Vector} p1, p2: Points of a line from left to right
  */
@@ -93,7 +93,7 @@ function getRandomPointOnLine(p1, p2) {
     return new Vector(leftX + randomDeltaX, A * (leftX + randomDeltaX) + B);
 }
 
-/*
+/**
  * Helper function used to create inheritance
  *
  * @return none

@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 var OverlappedRectanglesMode = require('./../src/overlapped-rectangles.mode');
 
 describe('OverlappedRectanglesMode constructor', function(){

@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 
 var Polygon = require('./../src/polygon');
 var Vector = require('./../src/vector');

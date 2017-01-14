@@ -1,6 +1,6 @@
 var utils = require('./utils');
 
-/*
+/**
  *  Check if a string is in a hex color format
  *  @return {boolean} True if the string is in a hex format
  *  @param {string} color: The string representing the color
@@ -9,7 +9,7 @@ function isHex(color) {
     return /#[a-f0-9]{6}/gi.test(color);
 }
 
-/*
+/**
  *  Check if a string is in a rgb color format
  *  @return {boolean} True if the string is in a rgb format
  *  @param {string} color: The string representing the color
@@ -19,7 +19,7 @@ function isHex(color) {
     color = color.replace(/\s/g, "");
     return /rgb\([\d]{1,3}[.]?[\d]*\,[\d]{1,3}[.]?[\d]*\,[\d]{1,3}[.]?[\d]*\)/i.test(color);
 }
- /*
+ /**
 *  Check if a string is in a rgba color format
 *  @return {boolean} True if the string is in a rgba format
 *  @param {string} color: The string representing the color
@@ -31,7 +31,7 @@ function isRgba(color) {
 
 }
 
-/*
+/**
  *	Convert hex color to rgb color
  *  @return {string / null} Converted color string or null if the input is invalid
  */
@@ -45,7 +45,7 @@ function hexToRgb(hex) {
     else return isRgb(hex) || isRgba(hex) ? hex : null;
 }
 
-/*
+/**
  *	Adjust the brightness of a color by percentage
  *  @param {string} color: The color string
  *  @param {float} percentage: A float within [-1, 1] by which the brightness is adjusted.
@@ -76,7 +76,7 @@ function adjustColorBrightness(color, percentage) {
     return null;
 }
 
-/*
+/**
  *  Function to generate random color with random brightness
  *  based on a given color
  *
@@ -103,7 +103,7 @@ function adjustColorBrightness(color, percentage) {
      return adjustColorBrightness(baseColor, randomArr[utils.getRandomNumberFromRange(0, 2)]);
  }
 
-/*
+/**
  *  Function to generate random gradient color with random brightness on both sides
  *  of the linear gradient based on a given color
  *

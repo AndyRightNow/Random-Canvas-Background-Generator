@@ -1,5 +1,5 @@
-/*jshint esversion: 6 */
-/*
+/**jshint esversion: 6 */
+/**
  *	Polygon class constructor
  *
  * @param {Array} points: The points of the polygon. They must be in clockwise or counter-clockwise order
@@ -16,7 +16,7 @@ Polygon.prototype = {
         this._points = points;
     },
 
-    /*
+    /**
      * Test if two polygons are equal
      *
      * @return {boolean} true if equal false if not
@@ -33,7 +33,7 @@ Polygon.prototype = {
         });
     },
 
-    /*
+    /**
      * Translate the polygon BY certain dx and dy
      *
      * @return {Polygon} itself for chaining
@@ -46,7 +46,7 @@ Polygon.prototype = {
         return this;
     },
 
-    /*
+    /**
      * Rotate the polygon around a certain origin clockwise
      *
      * @return {Polygon} itself for chaining
@@ -71,7 +71,7 @@ Polygon.prototype = {
         return this;
     },
 
-    /*
+    /**
      * Public member function - clone the polygon
      *
      */

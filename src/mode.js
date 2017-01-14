@@ -1,5 +1,5 @@
-/*jshint esversion: 6 */
-/*
+/**jshint esversion: 6 */
+/**
  * Mode object
  *
  * The mode object (e.g. 'Polygonal') responsible for generating primitive shapes
@@ -11,7 +11,7 @@
 //-----------------------------
 Array.from = require('./polyfills').from;
 
-/*
+/**
  * Base mode class constructor
  *
  * @param {Number} argObj.canvasWidth: The width of the canvas
@@ -46,7 +46,7 @@ function Mode(argObj) {
     this._yDensity = argObj.density ? argObj.density.y ? 1 - argObj.density.y : 0.6 : 0.6;
 }
 
-/*
+/**
  * Public member function - return the density of polygons
  *
  * @return {Object} density of x and y
@@ -58,7 +58,7 @@ Mode.prototype.getDensity = function() {
     };
 };
 
-/*
+/**
  * Public member function - set the density of polygons
  *
  * @param {Number} argObj.x: Density on x axis
@@ -81,7 +81,7 @@ Mode.prototype.setDensity = function(argObj) {
     }
 };
 
-/*
+/**
  * Public virtual function - set the array of color strings
  *
  */
@@ -89,7 +89,7 @@ Mode.prototype.setBaseColors = function(args) {
     this._baseColors = Array.from(arguments);
 };
 
-/*
+/**
  * Public virtual function - return an array of color strings
  *
  * @return {Array} An array of color strings
@@ -98,7 +98,7 @@ Mode.prototype.getBaseColors = function() {
     return this._baseColors;
 };
 
-/*
+/**
  * Public virtual function - return an array of the primitive shapes to draw with
  *
  * @return {Array} An array of primitive shapes
@@ -107,7 +107,7 @@ Mode.prototype.getPrimitives = function() {
     return this._primitives;
 };
 
-/*
+/**
  * Private virtual function - add a polygon to the primitives array
  *
  * @param {Polygon} polygon: The polygon to add
@@ -116,7 +116,7 @@ Mode.prototype.addPrimitive = function(polygon) {
     this._primitives.push(polygon);
 };
 
-/*
+/**
  * Public virtual function - clear primitives
  *
  */
@@ -124,7 +124,7 @@ Mode.prototype.clearPrimitives = function() {
     this._primitives = [];
 };
 
-/*
+/**
  * Public virtual function - return the styling function of this mode
  *
  * @return {function} a styling function
@@ -142,7 +142,7 @@ Mode.prototype._DENSITY_RATO_DIF =
     Mode.prototype._DENSITY_RATO_UPPER_BOUND -
     Mode.prototype._DENSITY_RATO_LOWER_BOUND;
 
-/*
+/**
  * Private virtual function - calculate width and height intervals
  */
 Mode.prototype._calcIntervals = function() {

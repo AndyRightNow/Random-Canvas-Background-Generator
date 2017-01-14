@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 
 module.exports = {
     OUTPUT: function(content) {

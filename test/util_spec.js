@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 var utils = require('./../src/utils');
 var Vector = require('./../src/vector');
 

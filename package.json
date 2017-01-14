@@ -4,7 +4,9 @@
   "description": "A js plugin to randomly generate background for HTML canvas",
   "main": "RandomBackgroundGenerator.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "build": "webpack",
+    "dev:build": "webpack"
   },
   "repository": {
     "type": "git",

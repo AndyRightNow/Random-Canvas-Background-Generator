@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 var Graph = require('./../src/graph');
 
 describe('Graph constructor', function(){

@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 var colorUtils = require('./../src/colorUtils');
 var test = require('./test');
 

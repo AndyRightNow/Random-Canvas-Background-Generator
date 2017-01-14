@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/**jshint esversion: 6 */
 var PolygonalMode = require('./../src/polygonal.mode');
 
 describe('PolygonalMode constructor', function(){
